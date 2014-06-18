@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Mogenerator.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>iGTD.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>7F2BE8D1194519C200D51335</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7F2BE8EA1945234400D51335</key>
 		<dict>
 			<key>primary</key>
 			<true/>

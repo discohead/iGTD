@@ -14,5 +14,7 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSString *cellTextKey;
+@property (strong, nonatomic) NSString *predicateFormatString;
 
 @end

@@ -9,6 +9,11 @@
 #import "GTDAppDelegate.h"
 
 #import "GTDMasterViewController.h"
+#import "Project.h"
+#import "Contact.h"
+#import "Context.h"
+#import "Tag.h"
+#import "Action.h"
 
 @implementation GTDAppDelegate
 
@@ -19,10 +24,144 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-    GTDMasterViewController *controller = (GTDMasterViewController *)navigationController.topViewController;
-    controller.managedObjectContext = self.managedObjectContext;
+    [MagicalRecord setupCoreDataStack];
+    
+    //[self createTestData];
+    
     return YES;
+}
+
+- (void)createTestData
+{
+    Context *home = [Context createEntity];
+    home.name = @"Home";
+    home.color = [UIColor blueColor];
+    
+    Context *office = [Context createEntity];
+    office.name = @"Office";
+    office.color = [UIColor redColor];
+    
+    Project *iosProject = [Project createEntity];
+    iosProject.name = @"Learn iOS";
+    iosProject.textDescription = @"Let's learn iOS for fun and profit!";
+    iosProject.deadline = [NSDate distantFuture];
+    iosProject.color = home.color;
+    iosProject.context = home;
+    
+    Project *workProject = [Project createEntity];
+    workProject.name = @"Prepare for DS season";
+    workProject.textDescription = @"Build system and gameplan for this year's DS stores.";
+    workProject.deadline = [NSDate distantFuture];
+    workProject.color = office.color;
+    workProject.context = office;
+    
+    Contact *natalie = [Contact createEntity];
+    natalie.firstName = @"Natalie";
+    natalie.lastName = @"Drusts";
+    natalie.phone = @"808-333-5555";
+    natalie.email = @"natalieskye4@yahoo.com";
+    natalie.address1 = @"5255 Harmony Ave.";
+    natalie.address2 = @"Apt 7";
+    natalie.city = @"North Hollywood";
+    natalie.state = @"CA";
+    natalie.birthday = [NSDate date];
+    natalie.relationship = @"Girlfriend";
+    natalie.color = office.color;
+    [workProject addContactsObject:natalie];
+    
+    Contact *mom = [Contact createEntity];
+    mom.firstName = @"Sue";
+    mom.lastName = @"Souders";
+    mom.phone = @"937-369-4870";
+    mom.email = @"ssouders112781@hotmail.com";
+    mom.address1 = @"10108 Pond Creek Rd.";
+    mom.address2 = nil;
+    mom.city = @"Alexandria";
+    mom.state = @"OH";
+    mom.birthday = [NSDate distantFuture];
+    mom.relationship = @"Mother";
+    mom.color = home.color;
+    [iosProject addContactsObject:mom];
+    
+    Tag *education = [Tag createEntity];
+    education.title = @"Education";
+    education.color = [UIColor yellowColor];
+    [iosProject addTagsObject:education];
+    [mom addTagsObject:education];
+    
+    Tag *fun = [Tag createEntity];
+    fun.title = @"Fun";
+    fun.color = [UIColor brownColor];
+    [workProject addTagsObject:fun];
+    [natalie addTagsObject:fun];
+    
+    Action *a1 = [Action createEntity];
+    a1.title = @"Learn Core Data";
+    a1.textDescription = @"Learn core data better.";
+    a1.priority = @(2);
+    a1.deadline = [NSDate distantFuture];
+    a1.scheduledDate = nil;
+    a1.color = home.color;
+    a1.created = [NSDate date];
+    a1.context = home;
+    [a1 addTagsObject:education];
+    [iosProject addActionsObject:a1];
+    [a1 addContactsObject:natalie];
+    [a1 addContactsObject:mom];
+    
+    Action *a2 = [Action createEntity];
+    a2.title = @"Organize Filesystem";
+    a2.textDescription = @"Clean up folders and re-organize.";
+    a2.priority = @(3);
+    a2.deadline = [NSDate distantPast];
+    a2.scheduledDate = nil;
+    a2.color = office.color;
+    a2.created = [NSDate date];
+    a2.context = office;
+    [a2 addTagsObject:fun];
+    [workProject addActionsObject:a2];
+    [a2 addContactsObject:natalie];
+    
+    Action *a3 = [Action createEntity];
+    a3.title = @"Refactor Code";
+    a3.textDescription = @"Refactor code to make it better.";
+    a3.priority = @(1);
+    a3.deadline = [NSDate date];
+    a3.scheduledDate = [NSDate date];
+    a3.color = home.color;
+    a3.created = [NSDate date];
+    a3.context = home;
+    [a3 addTagsObject:education];
+    [a3 addTagsObject:fun];
+    [iosProject addActionsObject:a3];
+    [a3 addContactsObject:mom];
+    
+    Action *a4 = [Action createEntity];
+    a4.title = @"Call Deb Thomas";
+    a4.textDescription = @"Call to find out when new sheet arrives.";
+    a4.priority = @(2);
+    a4.deadline = [NSDate distantFuture];
+    a4.scheduledDate = [NSDate date];
+    a4.color = office.color;
+    a4.created = [NSDate date];
+    a4.context = office;
+    [a4 addTagsObject:fun];
+    [workProject addActionsObject:a4];
+    [a4 addContactsObject:mom];
+    
+    NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+    
+    [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (!success)
+        {
+            NSLog(@"Error saving Test Data: %@", [error localizedDescription]);
+        } else
+        {
+            NSLog(@"TEST DATA SAVED!");
+        }
+    }];
+    
+    
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -51,6 +190,7 @@
 {
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
+    [MagicalRecord cleanUp];
 }
 
 - (void)saveContext
@@ -73,16 +213,7 @@
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
 - (NSManagedObjectContext *)managedObjectContext
 {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
+    return [NSManagedObjectContext defaultContext];
 }
 
 // Returns the managed object model for the application.

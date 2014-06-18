@@ -166,6 +166,7 @@
             GTDActionsTableViewController *actionsVC = (GTDActionsTableViewController *)[segue destinationViewController];
             fetchedResultsController.delegate = actionsVC;
             actionsVC.fetchedResultsController = fetchedResultsController;
+            actionsVC.navigationItem.title = cell.textLabel.text;
             
             NSError *error = nil;
             if (![actionsVC.fetchedResultsController performFetch:&error]) {

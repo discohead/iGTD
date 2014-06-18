@@ -130,6 +130,7 @@
         NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:[object description]];
         projectsController.delegate = actionsVC;
         actionsVC.fetchedResultsController = projectsController;
+        actionsVC.navigationItem.title = [object description];
         
         NSError *error = nil;
         if (![actionsVC.fetchedResultsController performFetch:&error]) {

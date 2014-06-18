@@ -190,6 +190,8 @@
         NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:cellText];
         projectsController.delegate = masterVC;
         masterVC.fetchedResultsController = projectsController;
+        masterVC.navigationItem.title = cellText;
+        
         if ([cellText isEqualToString:@"Contexts"] || [cellText isEqualToString:@"Projects"])
         {
             NSString *predicateString = [[entityName lowercaseString] stringByAppendingString:@" == %@"];
@@ -226,6 +228,7 @@
                                                                                                                   cacheName:@"All Actions"];
             fetchedResultsController.delegate = actionsVC;
             actionsVC.fetchedResultsController = fetchedResultsController;
+            actionsVC.navigationItem.title = @"All Actions";
             
             NSError *error = nil;
             if (![actionsVC.fetchedResultsController performFetch:&error]) {

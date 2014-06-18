@@ -8,6 +8,8 @@
 
 #import "GTDRootTableViewController.h"
 #import "GTDMasterViewController.h"
+#import "GTDActionsTableViewController.h"
+#import "GTDPrioritiesTableViewController.h"
 
 @interface GTDRootTableViewController ()
 
@@ -82,7 +84,27 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"Entity Segue" sender:[tableView cellForRowAtIndexPath:indexPath]];
+    switch (indexPath.row)
+    {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            [self performSegueWithIdentifier:@"Entity Segue" sender:[tableView cellForRowAtIndexPath:indexPath]];
+            break;
+            
+        case 5:
+            [self performSegueWithIdentifier:@"Priorities" sender:[tableView cellForRowAtIndexPath:indexPath]];
+            break;
+        
+        case 6:
+            [self performSegueWithIdentifier:@"All Actions" sender:[tableView cellForRowAtIndexPath:indexPath]];
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 /*
@@ -131,13 +153,15 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
-    GTDMasterViewController *masterVC = (GTDMasterViewController *)[segue destinationViewController];
-    masterVC.managedObjectContext = moc;
-    NSFetchRequest *fetchRequest;
+    
     
     if ([segue.identifier isEqualToString:@"Entity Segue"])
     {
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        GTDMasterViewController *masterVC = (GTDMasterViewController *)[segue destinationViewController];
+        masterVC.managedObjectContext = moc;
+        NSFetchRequest *fetchRequest;
+        
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSString *cellText = cell.textLabel.text;
         NSString *entityName = [cellText substringToIndex:cellText.length-1];
@@ -185,6 +209,31 @@
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
+        }
+    } else if ([segue.identifier isEqualToString:@"All Actions"])
+    {
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        if ([segue.destinationViewController isKindOfClass:[GTDActionsTableViewController class]])
+        {
+            GTDActionsTableViewController *actionsVC = (GTDActionsTableViewController *)[segue destinationViewController];
+            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Action"];
+            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+            [fetchRequest setSortDescriptors:@[sortDescriptor]];
+            
+            NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                       managedObjectContext:moc
+                                                                                                         sectionNameKeyPath:nil
+                                                                                                                  cacheName:@"All Actions"];
+            fetchedResultsController.delegate = actionsVC;
+            actionsVC.fetchedResultsController = fetchedResultsController;
+            
+            NSError *error = nil;
+            if (![actionsVC.fetchedResultsController performFetch:&error]) {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
         }
     }
     

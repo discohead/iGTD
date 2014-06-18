@@ -55,7 +55,6 @@
 		7F74FCFD1950C14300A0852F /* GTDRootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */; };
 		7F74FD001950FC6200A0852F /* GTDActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */; };
 		7F9594E019523AF900B8D212 /* GTDPrioritiesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9594DF19523AF900B8D212 /* GTDPrioritiesTableViewController.m */; };
-		7F9594E319523B1000B8D212 /* GTDAllActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9594E219523B1000B8D212 /* GTDAllActionsTableViewController.m */; };
 		E00334F3AB39472097AF7A0D /* libPods-iGTDTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A5753A18F940D0B87880E8 /* libPods-iGTDTests.a */; };
 /* End PBXBuildFile section */
 
@@ -122,8 +121,6 @@
 		7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDActionsTableViewController.m; sourceTree = "<group>"; };
 		7F9594DE19523AF900B8D212 /* GTDPrioritiesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDPrioritiesTableViewController.h; sourceTree = "<group>"; };
 		7F9594DF19523AF900B8D212 /* GTDPrioritiesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDPrioritiesTableViewController.m; sourceTree = "<group>"; };
-		7F9594E119523B1000B8D212 /* GTDAllActionsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDAllActionsTableViewController.h; sourceTree = "<group>"; };
-		7F9594E219523B1000B8D212 /* GTDAllActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDAllActionsTableViewController.m; sourceTree = "<group>"; };
 		8763DB3DF06C44018BF87646 /* Pods-iGTDTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTDTests.xcconfig"; path = "Pods/Pods-iGTDTests.xcconfig"; sourceTree = "<group>"; };
 		9768F79F824242EA8415B35F /* libPods-iGTD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iGTD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0C9DB346C384718A8D3BA3C /* Pods-iGTD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTD.xcconfig"; path = "Pods/Pods-iGTD.xcconfig"; sourceTree = "<group>"; };
@@ -196,17 +193,13 @@
 			isa = PBXGroup;
 			children = (
 				7F2BE8EF1945242600D51335 /* Model */,
-				7F2BE8BD194519C100D51335 /* GTDAppDelegate.h */,
-				7F2BE8BE194519C100D51335 /* GTDAppDelegate.m */,
 				7F2BE8C0194519C100D51335 /* Main.storyboard */,
-				7F9594E119523B1000B8D212 /* GTDAllActionsTableViewController.h */,
-				7F9594E219523B1000B8D212 /* GTDAllActionsTableViewController.m */,
-				7F9594DE19523AF900B8D212 /* GTDPrioritiesTableViewController.h */,
-				7F9594DF19523AF900B8D212 /* GTDPrioritiesTableViewController.m */,
 				7F74FCFB1950C14300A0852F /* GTDRootTableViewController.h */,
 				7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */,
 				7F2BE8C6194519C100D51335 /* GTDMasterViewController.h */,
 				7F2BE8C7194519C100D51335 /* GTDMasterViewController.m */,
+				7F9594DE19523AF900B8D212 /* GTDPrioritiesTableViewController.h */,
+				7F9594DF19523AF900B8D212 /* GTDPrioritiesTableViewController.m */,
 				7F74FCFE1950FC6200A0852F /* GTDActionsTableViewController.h */,
 				7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */,
 				7F2BE8C9194519C100D51335 /* GTDDetailViewController.h */,
@@ -221,6 +214,8 @@
 		7F2BE8B5194519C100D51335 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				7F2BE8BD194519C100D51335 /* GTDAppDelegate.h */,
+				7F2BE8BE194519C100D51335 /* GTDAppDelegate.m */,
 				7F2BE8B6194519C100D51335 /* iGTD-Info.plist */,
 				7F2BE8B7194519C100D51335 /* InfoPlist.strings */,
 				7F2BE8BA194519C100D51335 /* main.m */,
@@ -464,7 +459,6 @@
 				7F2BE9041945242600D51335 /* _Action.m in Sources */,
 				7F2BE90C1945242600D51335 /* Project.m in Sources */,
 				7F2BE90A1945242600D51335 /* Contact.m in Sources */,
-				7F9594E319523B1000B8D212 /* GTDAllActionsTableViewController.m in Sources */,
 				7F2BE8CB194519C100D51335 /* GTDDetailViewController.m in Sources */,
 				7F2BE8BB194519C100D51335 /* main.m in Sources */,
 				7F2BE90D1945242600D51335 /* Tag.m in Sources */,

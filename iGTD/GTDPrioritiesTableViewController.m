@@ -7,6 +7,7 @@
 //
 
 #import "GTDPrioritiesTableViewController.h"
+#import "GTDActionsTableViewController.h"
 
 @interface GTDPrioritiesTableViewController ()
 
@@ -44,28 +45,55 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return 6;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
     
     // Configure the cell...
+    switch (indexPath.row)
+    {
+        case 0:
+            cell.textLabel.text = @"Now";
+            break;
+        case 1:
+            cell.textLabel.text = @"Next";
+            break;
+        case 2:
+            cell.textLabel.text = @"Soon";
+            break;
+        case 3:
+            cell.textLabel.text = @"Later";
+            break;
+        case 4:
+            cell.textLabel.text = @"Someday";
+            break;
+        case 5:
+            cell.textLabel.text = @"Waiting";
+            break;
+        default:
+            break;
+    }
     
     return cell;
 }
-*/
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"Actions" sender:[tableView cellForRowAtIndexPath:indexPath]];
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -105,7 +133,7 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -113,7 +141,43 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([sender isKindOfClass:[UITableViewCell class]])
+    {
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        
+        UITableViewCell *cell = (UITableViewCell *)sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        NSNumber *priority = @(indexPath.row + 1);
+        
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Action"];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+        [fetchRequest setSortDescriptors:@[sortDescriptor]];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority == %@", priority];
+        [fetchRequest setPredicate:predicate];
+        
+        NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                   managedObjectContext:moc
+                                                                                                     sectionNameKeyPath:nil
+                                                                                                              cacheName:cell.textLabel.text];
+        
+        if ([segue.destinationViewController isKindOfClass:[GTDActionsTableViewController class]])
+        {
+            GTDActionsTableViewController *actionsVC = (GTDActionsTableViewController *)[segue destinationViewController];
+            fetchedResultsController.delegate = actionsVC;
+            actionsVC.fetchedResultsController = fetchedResultsController;
+            
+            NSError *error = nil;
+            if (![actionsVC.fetchedResultsController performFetch:&error]) {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+        }
+    }
+    
 }
-*/
+
 
 @end

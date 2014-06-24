@@ -139,7 +139,7 @@
     Action *a4 = [Action createEntity];
     a4.title = @"Call Deb Thomas";
     a4.textDescription = @"Call to find out when new sheet arrives.";
-    a4.priority = @(2);
+    a4.priority = @(0);
     a4.deadline = [NSDate distantFuture];
     a4.scheduledDate = [NSDate date];
     a4.color = office.color;

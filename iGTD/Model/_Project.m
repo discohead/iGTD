@@ -5,6 +5,8 @@
 
 const struct ProjectAttributes ProjectAttributes = {
 	.color = @"color",
+	.completed = @"completed",
+	.created = @"created",
 	.deadline = @"deadline",
 	.name = @"name",
 	.textDescription = @"textDescription",
@@ -46,6 +48,11 @@ const struct ProjectFetchedProperties ProjectFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"completedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"completed"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -54,6 +61,39 @@ const struct ProjectFetchedProperties ProjectFetchedProperties = {
 
 
 @dynamic color;
+
+
+
+
+
+
+@dynamic completed;
+
+
+
+- (BOOL)completedValue {
+	NSNumber *result = [self completed];
+	return [result boolValue];
+}
+
+- (void)setCompletedValue:(BOOL)value_ {
+	[self setCompleted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveCompletedValue {
+	NSNumber *result = [self primitiveCompleted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveCompletedValue:(BOOL)value_ {
+	[self setPrimitiveCompleted:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic created;
 
 
 

@@ -5,8 +5,10 @@
 
 const struct ActionAttributes ActionAttributes = {
 	.color = @"color",
+	.completed = @"completed",
 	.created = @"created",
 	.deadline = @"deadline",
+	.isAllDay = @"isAllDay",
 	.priority = @"priority",
 	.scheduledDate = @"scheduledDate",
 	.textDescription = @"textDescription",
@@ -50,6 +52,16 @@ const struct ActionFetchedProperties ActionFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"completedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"completed"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"isAllDayValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isAllDay"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"priorityValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"priority"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -69,6 +81,32 @@ const struct ActionFetchedProperties ActionFetchedProperties = {
 
 
 
+@dynamic completed;
+
+
+
+- (BOOL)completedValue {
+	NSNumber *result = [self completed];
+	return [result boolValue];
+}
+
+- (void)setCompletedValue:(BOOL)value_ {
+	[self setCompleted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveCompletedValue {
+	NSNumber *result = [self primitiveCompleted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveCompletedValue:(BOOL)value_ {
+	[self setPrimitiveCompleted:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic created;
 
 
@@ -78,6 +116,32 @@ const struct ActionFetchedProperties ActionFetchedProperties = {
 
 @dynamic deadline;
 
+
+
+
+
+
+@dynamic isAllDay;
+
+
+
+- (BOOL)isAllDayValue {
+	NSNumber *result = [self isAllDay];
+	return [result boolValue];
+}
+
+- (void)setIsAllDayValue:(BOOL)value_ {
+	[self setIsAllDay:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsAllDayValue {
+	NSNumber *result = [self primitiveIsAllDay];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsAllDayValue:(BOOL)value_ {
+	[self setPrimitiveIsAllDay:[NSNumber numberWithBool:value_]];
+}
 
 
 

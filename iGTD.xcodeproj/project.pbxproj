@@ -55,6 +55,8 @@
 		7F74FCFD1950C14300A0852F /* GTDRootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */; };
 		7F74FD001950FC6200A0852F /* GTDActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */; };
 		7F9594E019523AF900B8D212 /* GTDPrioritiesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9594DF19523AF900B8D212 /* GTDPrioritiesTableViewController.m */; };
+		7FE0D2BB1958FA2800074259 /* GTDNewActionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */; };
+		7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */; };
 		E00334F3AB39472097AF7A0D /* libPods-iGTDTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A5753A18F940D0B87880E8 /* libPods-iGTDTests.a */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +123,10 @@
 		7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDActionsTableViewController.m; sourceTree = "<group>"; };
 		7F9594DE19523AF900B8D212 /* GTDPrioritiesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDPrioritiesTableViewController.h; sourceTree = "<group>"; };
 		7F9594DF19523AF900B8D212 /* GTDPrioritiesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDPrioritiesTableViewController.m; sourceTree = "<group>"; };
+		7FE0D2B91958FA2800074259 /* GTDNewActionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDNewActionTableViewController.h; sourceTree = "<group>"; };
+		7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDNewActionTableViewController.m; sourceTree = "<group>"; };
+		7FE0D2BC1959207400074259 /* GTDStartTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDStartTimeTableViewController.h; sourceTree = "<group>"; };
+		7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDStartTimeTableViewController.m; sourceTree = "<group>"; };
 		8763DB3DF06C44018BF87646 /* Pods-iGTDTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTDTests.xcconfig"; path = "Pods/Pods-iGTDTests.xcconfig"; sourceTree = "<group>"; };
 		9768F79F824242EA8415B35F /* libPods-iGTD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iGTD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0C9DB346C384718A8D3BA3C /* Pods-iGTD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTD.xcconfig"; path = "Pods/Pods-iGTD.xcconfig"; sourceTree = "<group>"; };
@@ -196,6 +202,10 @@
 				7F2BE8C0194519C100D51335 /* Main.storyboard */,
 				7F74FCFB1950C14300A0852F /* GTDRootTableViewController.h */,
 				7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */,
+				7FE0D2B91958FA2800074259 /* GTDNewActionTableViewController.h */,
+				7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */,
+				7FE0D2BC1959207400074259 /* GTDStartTimeTableViewController.h */,
+				7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */,
 				7F2BE8C6194519C100D51335 /* GTDMasterViewController.h */,
 				7F2BE8C7194519C100D51335 /* GTDMasterViewController.m */,
 				7F9594DE19523AF900B8D212 /* GTDPrioritiesTableViewController.h */,
@@ -463,11 +473,13 @@
 				7F2BE8BB194519C100D51335 /* main.m in Sources */,
 				7F2BE90D1945242600D51335 /* Tag.m in Sources */,
 				7F2BE9071945242600D51335 /* _Project.m in Sources */,
+				7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */,
 				7F74FD001950FC6200A0852F /* GTDActionsTableViewController.m in Sources */,
 				7F2BE9091945242600D51335 /* Action.m in Sources */,
 				7F2BE8C8194519C100D51335 /* GTDMasterViewController.m in Sources */,
 				7F2BE8C5194519C100D51335 /* iGTD.xcdatamodeld in Sources */,
 				7F2BE9051945242600D51335 /* _Contact.m in Sources */,
+				7FE0D2BB1958FA2800074259 /* GTDNewActionTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

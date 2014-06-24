@@ -6,8 +6,10 @@
 
 extern const struct ActionAttributes {
 	__unsafe_unretained NSString *color;
+	__unsafe_unretained NSString *completed;
 	__unsafe_unretained NSString *created;
 	__unsafe_unretained NSString *deadline;
+	__unsafe_unretained NSString *isAllDay;
 	__unsafe_unretained NSString *priority;
 	__unsafe_unretained NSString *scheduledDate;
 	__unsafe_unretained NSString *textDescription;
@@ -39,6 +41,8 @@ extern const struct ActionFetchedProperties {
 
 
 
+
+
 @interface ActionID : NSManagedObjectID {}
 @end
 
@@ -62,6 +66,20 @@ extern const struct ActionFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* completed;
+
+
+
+@property BOOL completedValue;
+- (BOOL)completedValue;
+- (void)setCompletedValue:(BOOL)value_;
+
+//- (BOOL)validateCompleted:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSDate* created;
 
 
@@ -77,6 +95,20 @@ extern const struct ActionFetchedProperties {
 
 
 //- (BOOL)validateDeadline:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* isAllDay;
+
+
+
+@property BOOL isAllDayValue;
+- (BOOL)isAllDayValue;
+- (void)setIsAllDayValue:(BOOL)value_;
+
+//- (BOOL)validateIsAllDay:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -190,6 +222,15 @@ extern const struct ActionFetchedProperties {
 
 
 
+- (NSNumber*)primitiveCompleted;
+- (void)setPrimitiveCompleted:(NSNumber*)value;
+
+- (BOOL)primitiveCompletedValue;
+- (void)setPrimitiveCompletedValue:(BOOL)value_;
+
+
+
+
 - (NSDate*)primitiveCreated;
 - (void)setPrimitiveCreated:(NSDate*)value;
 
@@ -198,6 +239,15 @@ extern const struct ActionFetchedProperties {
 
 - (NSDate*)primitiveDeadline;
 - (void)setPrimitiveDeadline:(NSDate*)value;
+
+
+
+
+- (NSNumber*)primitiveIsAllDay;
+- (void)setPrimitiveIsAllDay:(NSNumber*)value;
+
+- (BOOL)primitiveIsAllDayValue;
+- (void)setPrimitiveIsAllDayValue:(BOOL)value_;
 
 
 

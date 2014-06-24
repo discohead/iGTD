@@ -17,4 +17,10 @@
     return self.name;
 }
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    self.created = [NSDate date];
+}
+
 @end

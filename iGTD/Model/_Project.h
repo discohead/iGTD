@@ -6,6 +6,8 @@
 
 extern const struct ProjectAttributes {
 	__unsafe_unretained NSString *color;
+	__unsafe_unretained NSString *completed;
+	__unsafe_unretained NSString *created;
 	__unsafe_unretained NSString *deadline;
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *textDescription;
@@ -31,6 +33,8 @@ extern const struct ProjectFetchedProperties {
 
 
 
+
+
 @interface ProjectID : NSManagedObjectID {}
 @end
 
@@ -49,6 +53,30 @@ extern const struct ProjectFetchedProperties {
 
 
 //- (BOOL)validateColor:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* completed;
+
+
+
+@property BOOL completedValue;
+- (BOOL)completedValue;
+- (void)setCompletedValue:(BOOL)value_;
+
+//- (BOOL)validateCompleted:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSDate* created;
+
+
+
+//- (BOOL)validateCreated:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -139,6 +167,21 @@ extern const struct ProjectFetchedProperties {
 
 - (id)primitiveColor;
 - (void)setPrimitiveColor:(id)value;
+
+
+
+
+- (NSNumber*)primitiveCompleted;
+- (void)setPrimitiveCompleted:(NSNumber*)value;
+
+- (BOOL)primitiveCompletedValue;
+- (void)setPrimitiveCompletedValue:(BOOL)value_;
+
+
+
+
+- (NSDate*)primitiveCreated;
+- (void)setPrimitiveCreated:(NSDate*)value;
 
 
 

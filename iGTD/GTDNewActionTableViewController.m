@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *projectLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contactsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tagsLabel;
-@property (strong, nonatomic) NSArray *priorities;
+@property (strong, nonatomic) NSArray *priorityStrings;
+@property (strong, nonatomic) NSArray *startTimeStrings;
 
 @end
 
@@ -35,7 +36,7 @@
 - (IBAction)priorityStepperValueChanged:(UIStepper *)sender
 {
     self.priority = @(sender.value);
-    self.priorityLabel.text = self.priorities[self.priority.integerValue];
+    self.priorityLabel.text = self.priorityStrings[self.priority.integerValue];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -44,7 +45,8 @@
     if (self)
     {
         // Custom initialization
-        _priorities = @[@"None", @"Low", @"Medium", @"High"];
+        _priorityStrings = @[@"None", @"Low", @"Medium", @"High"];
+        _startTimeStrings = @[@"Inbox", @"Today", @"Next", @"Tomorrow", @"Scheduled", @"Someday", @"Waiting"];
         _isAllDay = YES;
     }
     return self;
@@ -113,23 +115,83 @@
 
 - (void)didChangeStartTime:(NSInteger)startTime
 {
-    [self didChangeStartTime:startTime withScheduledDate:nil andDeadline:nil];
+    [self didChangeStartTime:startTime withScheduledDate:nil];
 }
 
 - (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date
 {
-    [self didChangeStartTime:startTime withScheduledDate:date andDeadline:nil];
-}
-
-- (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date andDeadline:(NSDate *)deadline
-{
+    
     self.startTime = @(startTime);
+    self.scheduledDate = date;
     
-    if (date) self.scheduledDate = date;
-    
-    if (deadline) self.deadline = deadline;
+    [self formatStartTimeLabel];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (NSString *)dateStringFromDate:(NSDate *)date
+{
+    if (self.isAllDay)
+    {
+        return [NSDateFormatter localizedStringFromDate:date dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
+    } else if (self.startTime.intValue == 1)
+    {
+        return [NSDateFormatter localizedStringFromDate:date dateStyle:NSDateFormatterNoStyle timeStyle:NSDateFormatterShortStyle];
+    } else
+    {
+        return [NSDateFormatter localizedStringFromDate:date dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle];
+    }
+}
+
+- (void)formatStartTimeLabel
+{
+    if (self.isAllDay)
+    {
+        switch (self.startTime.intValue)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 5:
+            case 6:
+                self.startTimeLabel.text = self.startTimeStrings[self.startTime.intValue];
+                break;
+            
+            case 3:
+                self.startTimeLabel.text = [self dateStringFromDate:[NSDate dateWithTimeIntervalSinceNow:24 * 60 * 60]];
+                break;
+                
+            case 4:
+                self.startTimeLabel.text = [self dateStringFromDate:self.scheduledDate];
+                break;
+                
+            default:
+                break;
+        }
+    } else
+    {
+        switch (self.startTime.intValue)
+        {
+            case 0:
+            case 2:
+            case 5:
+            case 6:
+                self.startTimeLabel.text = self.startTimeStrings[self.startTime.intValue];
+                break;
+            
+            case 1:
+                self.startTimeLabel.text = [NSString stringWithFormat:@"Today %@", [self dateStringFromDate:self.scheduledDate]];
+                break;
+            
+            case 3:
+            case 4:
+                self.startTimeLabel.text = [self dateStringFromDate:self.scheduledDate];
+                break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 -(void)didCancel

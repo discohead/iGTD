@@ -12,6 +12,8 @@
 
 @property (nonatomic) BOOL isScheduledDate;
 @property (nonatomic) BOOL isDeadlineDate;
+@property (nonatomic) BOOL isAllDay;
 @property (nonatomic) NSInteger startTime;
+
 
 @end

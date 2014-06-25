@@ -7,7 +7,6 @@
 //
 
 #import "GTDMasterViewController.h"
-#import "GTDDetailViewController.h"
 #import "GTDActionsTableViewController.h"
 #import "Project.h"
 #import "Context.h"

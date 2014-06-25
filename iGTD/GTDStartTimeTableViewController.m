@@ -156,6 +156,7 @@
         GTDCalendarPickerViewController *calendarVC = (GTDCalendarPickerViewController *)segue.destinationViewController;
         calendarVC.isScheduledDate = YES;
         calendarVC.isDeadlineDate = NO;
+        calendarVC.isAllDay = self.isAllDay;
         calendarVC.startTime = indexPath.row;
     }
 }

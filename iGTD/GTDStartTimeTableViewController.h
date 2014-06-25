@@ -12,7 +12,6 @@
 
 - (void)didChangeStartTime:(NSInteger)startTime;
 - (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date;
-- (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date andDeadline:(NSDate *)deadline;
 - (void)didCancel;
 
 @end

@@ -10,6 +10,7 @@ extern const struct ProjectAttributes {
 	__unsafe_unretained NSString *created;
 	__unsafe_unretained NSString *deadline;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *startTime;
 	__unsafe_unretained NSString *textDescription;
 } ProjectAttributes;
 
@@ -29,6 +30,7 @@ extern const struct ProjectFetchedProperties {
 @class Tag;
 
 @class NSObject;
+
 
 
 
@@ -97,6 +99,20 @@ extern const struct ProjectFetchedProperties {
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* startTime;
+
+
+
+@property int16_t startTimeValue;
+- (int16_t)startTimeValue;
+- (void)setStartTimeValue:(int16_t)value_;
+
+//- (BOOL)validateStartTime:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -194,6 +210,15 @@ extern const struct ProjectFetchedProperties {
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveStartTime;
+- (void)setPrimitiveStartTime:(NSNumber*)value;
+
+- (int16_t)primitiveStartTimeValue;
+- (void)setPrimitiveStartTimeValue:(int16_t)value_;
 
 
 

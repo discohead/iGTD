@@ -13,8 +13,9 @@
 #import "Contact.h"
 #import "Tag.h"
 
+#import "GTDStartTimeTableViewController.h"
 
-@interface GTDNewActionTableViewController : UITableViewController
+@interface GTDNewActionTableViewController : UITableViewController <GTDStartTimeTableViewControllerDelegate>
 
 @property (strong, nonatomic) Action *action;
 @property (strong, nonatomic) Project *project;
@@ -22,5 +23,9 @@
 @property (strong, nonatomic) NSSet *contacts;
 @property (strong, nonatomic) NSSet *tags;
 @property (strong, nonatomic) NSNumber *priority;
+@property (strong, nonatomic) NSNumber *startTime;
+@property (strong, nonatomic) NSDate *scheduledDate;
+@property (strong, nonatomic) NSDate *deadline;
+@property (nonatomic) BOOL isAllDay;
 
 @end

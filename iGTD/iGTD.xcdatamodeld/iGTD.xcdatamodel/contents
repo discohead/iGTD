@@ -8,6 +8,7 @@
         <attribute name="isAllDay" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="priority" attributeType="Integer 16" minValueString="0" maxValueString="3" defaultValueString="0" syncable="YES"/>
         <attribute name="scheduledDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="startTime" attributeType="Integer 16" minValueString="0" maxValueString="6" defaultValueString="0" syncable="YES"/>
         <attribute name="textDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
@@ -46,6 +47,7 @@
         <attribute name="created" attributeType="Date" syncable="YES"/>
         <attribute name="deadline" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="5" defaultValueString="2" syncable="YES"/>
         <attribute name="textDescription" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="project" inverseEntity="Action" syncable="YES"/>
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="projects" inverseEntity="Contact" syncable="YES"/>
@@ -60,10 +62,10 @@
         <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="tags" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Action" positionX="261" positionY="189" width="128" height="255"/>
+        <element name="Action" positionX="261" positionY="189" width="128" height="268"/>
         <element name="Contact" positionX="72" positionY="441" width="128" height="270"/>
         <element name="Context" positionX="36" positionY="153" width="128" height="105"/>
-        <element name="Project" positionX="-234" positionY="278" width="128" height="193"/>
+        <element name="Project" positionX="-234" positionY="278" width="128" height="208"/>
         <element name="Tag" positionX="628" positionY="279" width="128" height="120"/>
     </elements>
 </model>

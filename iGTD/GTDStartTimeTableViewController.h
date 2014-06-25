@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol GTDStartTimeTableViewControllerDelegate <NSObject>
+
+- (void)didChangeStartTime:(NSInteger)startTime;
+- (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date;
+- (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date andDeadline:(NSDate *)deadline;
+- (void)didCancel;
+
+@end
+
 @interface GTDStartTimeTableViewController : UITableViewController
+
+@property (nonatomic) BOOL isAllDay;
+@property (weak, nonatomic) id <GTDStartTimeTableViewControllerDelegate> delegate;
 
 @end

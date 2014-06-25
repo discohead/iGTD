@@ -9,6 +9,7 @@ const struct ProjectAttributes ProjectAttributes = {
 	.created = @"created",
 	.deadline = @"deadline",
 	.name = @"name",
+	.startTime = @"startTime",
 	.textDescription = @"textDescription",
 };
 
@@ -50,6 +51,11 @@ const struct ProjectFetchedProperties ProjectFetchedProperties = {
 	
 	if ([key isEqualToString:@"completedValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"completed"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"startTimeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"startTime"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -109,6 +115,32 @@ const struct ProjectFetchedProperties ProjectFetchedProperties = {
 
 @dynamic name;
 
+
+
+
+
+
+@dynamic startTime;
+
+
+
+- (int16_t)startTimeValue {
+	NSNumber *result = [self startTime];
+	return [result shortValue];
+}
+
+- (void)setStartTimeValue:(int16_t)value_ {
+	[self setStartTime:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveStartTimeValue {
+	NSNumber *result = [self primitiveStartTime];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveStartTimeValue:(int16_t)value_ {
+	[self setPrimitiveStartTime:[NSNumber numberWithShort:value_]];
+}
 
 
 

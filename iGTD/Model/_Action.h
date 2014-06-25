@@ -12,6 +12,7 @@ extern const struct ActionAttributes {
 	__unsafe_unretained NSString *isAllDay;
 	__unsafe_unretained NSString *priority;
 	__unsafe_unretained NSString *scheduledDate;
+	__unsafe_unretained NSString *startTime;
 	__unsafe_unretained NSString *textDescription;
 	__unsafe_unretained NSString *title;
 	__unsafe_unretained NSString *updated;
@@ -33,6 +34,7 @@ extern const struct ActionFetchedProperties {
 @class Tag;
 
 @class NSObject;
+
 
 
 
@@ -133,6 +135,20 @@ extern const struct ActionFetchedProperties {
 
 
 //- (BOOL)validateScheduledDate:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* startTime;
+
+
+
+@property int16_t startTimeValue;
+- (int16_t)startTimeValue;
+- (void)setStartTimeValue:(int16_t)value_;
+
+//- (BOOL)validateStartTime:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -263,6 +279,15 @@ extern const struct ActionFetchedProperties {
 
 - (NSDate*)primitiveScheduledDate;
 - (void)setPrimitiveScheduledDate:(NSDate*)value;
+
+
+
+
+- (NSNumber*)primitiveStartTime;
+- (void)setPrimitiveStartTime:(NSNumber*)value;
+
+- (int16_t)primitiveStartTimeValue;
+- (void)setPrimitiveStartTimeValue:(int16_t)value_;
 
 
 

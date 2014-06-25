@@ -11,6 +11,7 @@ const struct ActionAttributes ActionAttributes = {
 	.isAllDay = @"isAllDay",
 	.priority = @"priority",
 	.scheduledDate = @"scheduledDate",
+	.startTime = @"startTime",
 	.textDescription = @"textDescription",
 	.title = @"title",
 	.updated = @"updated",
@@ -64,6 +65,11 @@ const struct ActionFetchedProperties ActionFetchedProperties = {
 	}
 	if ([key isEqualToString:@"priorityValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"priority"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"startTimeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"startTime"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -175,6 +181,32 @@ const struct ActionFetchedProperties ActionFetchedProperties = {
 
 @dynamic scheduledDate;
 
+
+
+
+
+
+@dynamic startTime;
+
+
+
+- (int16_t)startTimeValue {
+	NSNumber *result = [self startTime];
+	return [result shortValue];
+}
+
+- (void)setStartTimeValue:(int16_t)value_ {
+	[self setStartTime:[NSNumber numberWithShort:value_]];
+}
+
+- (int16_t)primitiveStartTimeValue {
+	NSNumber *result = [self primitiveStartTime];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveStartTimeValue:(int16_t)value_ {
+	[self setPrimitiveStartTime:[NSNumber numberWithShort:value_]];
+}
 
 
 

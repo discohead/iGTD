@@ -7,6 +7,7 @@
 //
 
 #import "GTDNewActionTableViewController.h"
+#import "GTDStartTimeTableViewController.h"
 
 @interface GTDNewActionTableViewController ()
 
@@ -14,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
 @property (weak, nonatomic) IBOutlet UIStepper *priorityStepper;
 @property (weak, nonatomic) IBOutlet UILabel *priorityLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *isAllDay;
 @property (weak, nonatomic) IBOutlet UILabel *startTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *deadlineLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contextLabel;
@@ -27,13 +27,9 @@
 
 @implementation GTDNewActionTableViewController
 
-- (NSArray *)priorities
+- (IBAction)isAllDaySwitch:(UISwitch *)sender
 {
-    if (!_priorities)
-    {
-        _priorities = @[@"None", @"Low", @"Medium", @"High"];
-    }
-    return _priorities;
+    self.isAllDay = !self.isAllDay;
 }
 
 - (IBAction)priorityStepperValueChanged:(UIStepper *)sender
@@ -48,6 +44,8 @@
     if (self)
     {
         // Custom initialization
+        _priorities = @[@"None", @"Low", @"Medium", @"High"];
+        _isAllDay = YES;
     }
     return self;
 }
@@ -56,11 +54,6 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,56 +80,14 @@
     return rowCount;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+    if (indexPath.section == 2 && indexPath.row == 1)
+    {
+        [self performSegueWithIdentifier:@"startTime" sender:[tableView cellForRowAtIndexPath:indexPath]];
+    }
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -144,7 +95,45 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"startTime"])
+    {
+        if ([segue.destinationViewController isKindOfClass:[UINavigationController class]])
+        {
+            UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
+            NSArray *vcs = [nav viewControllers];
+            GTDStartTimeTableViewController *startTimeVC = [vcs firstObject];
+            startTimeVC.isAllDay = self.isAllDay;
+            startTimeVC.delegate = self;
+        }
+    }
+    
 }
-*/
 
+#pragma mark - Start Time Delegate
+
+- (void)didChangeStartTime:(NSInteger)startTime
+{
+    [self didChangeStartTime:startTime withScheduledDate:nil andDeadline:nil];
+}
+
+- (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date
+{
+    [self didChangeStartTime:startTime withScheduledDate:date andDeadline:nil];
+}
+
+- (void)didChangeStartTime:(NSInteger)startTime withScheduledDate:(NSDate *)date andDeadline:(NSDate *)deadline
+{
+    self.startTime = @(startTime);
+    
+    if (date) self.scheduledDate = date;
+    
+    if (deadline) self.deadline = deadline;
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)didCancel
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

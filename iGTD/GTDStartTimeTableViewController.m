@@ -7,18 +7,32 @@
 //
 
 #import "GTDStartTimeTableViewController.h"
+#import "GTDCalendarPickerViewController.h"
 
 @interface GTDStartTimeTableViewController ()
+
+@property (strong, nonatomic) NSArray *startTimes;
 
 @end
 
 @implementation GTDStartTimeTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (NSArray *)startTimes
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    if (!_startTimes)
+    {
+        _startTimes = @[@"Inbox", @"Today", @"Next", @"Tomorrow", @"Scheduled", @"Someday", @"Waiting"];
+    }
+    return _startTimes;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        // Custom initilization
+        
     }
     return self;
 }
@@ -26,12 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,68 +53,90 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return 7;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     
     // Configure the cell...
+
+    cell.textLabel.text = self.startTimes[indexPath.row];
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    [self setCheckMarkForCellAtIndexPath:indexPath];
+    
+    if (self.isAllDay)
+    {
+        if (indexPath.row == 4)
+        {
+            [self performSegueWithIdentifier:@"calendarPicker" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        } else
+        {
+            [self.delegate didChangeStartTime:indexPath.row];
+        }
+    } else
+    {
+        switch (indexPath.row)
+        {
+            case 0:
+            case 2:
+                [self.delegate didChangeStartTime:indexPath.row];
+                break;
+            
+            case 1:
+            case 3:
+            case 4:
+                [self performSegueWithIdentifier:@"calendarPicker" sender:[tableView cellForRowAtIndexPath:indexPath]];
+                break;
+            
+            case 5:
+            case 6:
+                self.isAllDay = NO;
+                [self.delegate didChangeStartTime:indexPath.row];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)setCheckMarkForCellAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    if (cell.accessoryType == UITableViewCellAccessoryCheckmark)
+    {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    } else
+    {
+        for (int i = 0; i < self.startTimes.count; i++)
+        {
+            NSIndexPath *iPath = [NSIndexPath indexPathForRow:i inSection:0];
+            UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:iPath];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -113,7 +144,26 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    UITableViewCell *cell;
+    NSIndexPath *indexPath;
+    
+    if ([sender isKindOfClass:[UITableViewCell class]]) cell = (UITableViewCell *)sender;
+    
+    if (cell) indexPath = [self.tableView indexPathForCell:cell];
+    
+    if ([segue.identifier isEqualToString:@"calendarPicker"])
+    {
+        GTDCalendarPickerViewController *calendarVC = (GTDCalendarPickerViewController *)segue.destinationViewController;
+        calendarVC.isScheduledDate = YES;
+        calendarVC.isDeadlineDate = NO;
+        calendarVC.startTime = indexPath.row;
+    }
 }
-*/
+
+
+- (IBAction)cancelBarButtonPressed:(id)sender
+{
+    [self.delegate didCancel];
+}
 
 @end

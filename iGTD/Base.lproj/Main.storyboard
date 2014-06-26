@@ -513,7 +513,7 @@
                         <outlet property="titleTextField" destination="gfy-Ha-NrT" id="dd5-Kf-G49"/>
                         <segue destination="xwS-S0-5sh" kind="modal" identifier="startTime" id="n4F-c1-JsW"/>
                         <segue destination="cfV-uN-8df" kind="modal" identifier="deadline" id="JUF-O3-xS7"/>
-                        <segue destination="Exw-Da-Koz" kind="modal" identifier="context" id="bed-qu-xhm"/>
+                        <segue destination="TaC-WU-gtl" kind="modal" identifier="context" id="bed-qu-xhm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmw-jz-m0K" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -632,7 +632,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pJg-Zu-18P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="-605"/>
+            <point key="canvasLocation" x="2235" y="-605"/>
         </scene>
         <!--Calendar Picker View Controller-->
         <scene sceneID="1ng-St-CTS">
@@ -690,7 +690,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OB8-JO-BXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="-1270"/>
+            <point key="canvasLocation" x="2235" y="-1375"/>
         </scene>
         <!--Actions Table View Controller-->
         <scene sceneID="9uW-t9-eWa">
@@ -727,7 +727,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             </objects>
             <point key="canvasLocation" x="1352" y="64"/>
         </scene>
-        <!--Context Picker Table View Controller - Title-->
+        <!--Context Picker Table View Controller - Context-->
         <scene sceneID="I5j-cs-yzT">
             <objects>
                 <tableViewController id="Exw-Da-Koz" customClass="GTDContextPickerTableViewController" sceneMemberID="viewController">
@@ -737,7 +737,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="ant-Ae-b0K">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ant-Ae-b0K" id="bQQ-4m-MUf">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -751,18 +751,17 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <outlet property="delegate" destination="Exw-Da-Koz" id="uEk-6g-uOe"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="8qW-3E-vdu"/>
+                    <navigationItem key="navigationItem" title="Context" id="8qW-3E-vdu">
+                        <barButtonItem key="leftBarButtonItem" title="Item" systemItem="cancel" id="Pv2-A0-GCJ">
+                            <connections>
+                                <action selector="cancelBarButtonItemPressed:" destination="Exw-Da-Koz" id="RJ2-Zw-8z1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lo-JD-72a" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationBar contentMode="scaleToFill" id="Swx-Cf-LsD">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <items>
-                        <navigationItem title="Title" id="YjH-44-Eyy"/>
-                    </items>
-                </navigationBar>
             </objects>
-            <point key="canvasLocation" x="1763" y="64"/>
+            <point key="canvasLocation" x="2352" y="64"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Zwu-lm-mDd">
@@ -780,7 +779,25 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nMR-GM-ozK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1763" y="-605"/>
+            <point key="canvasLocation" x="1820" y="-605"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="1VV-WD-su7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TaC-WU-gtl" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="diq-py-27F">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Exw-Da-Koz" kind="relationship" relationship="rootViewController" id="22r-oz-8Hw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IWr-dS-GsJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1920" y="64"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

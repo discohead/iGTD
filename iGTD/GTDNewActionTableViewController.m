@@ -134,9 +134,11 @@
         }
     } else if ([segue.identifier isEqualToString:@"context"])
     {
-        if ([segue.destinationViewController isKindOfClass:[GTDContextPickerTableViewController class]])
+        if ([segue.destinationViewController isKindOfClass:[UINavigationController class]])
         {
-            GTDContextPickerTableViewController *contextVC = (GTDContextPickerTableViewController *)segue.destinationViewController;
+            UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
+            NSArray *vcs = [nav viewControllers];
+            GTDContextPickerTableViewController *contextVC = [vcs firstObject];
             contextVC.delegate = self;
             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Context"];
             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
@@ -152,8 +154,6 @@
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
-            
-            NSLog(@"fetchedObjects count = %i", [[contextVC.fetchedResultsController fetchedObjects] count]);
             
         }
     }
@@ -216,6 +216,20 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     self.deadlineLabel.text = [self dateStringFromDate:date];
+}
+
+#pragma mark - Context Picker Delegate
+
+- (void)didCancelContextPicker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didChangeContext:(Context *)context
+{
+    self.context = context;
+    self.contextLabel.text = [context description];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Helper Methods

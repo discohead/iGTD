@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class Context;
+
 @protocol GTDContextPickerTableViewControllerDelegate <NSObject>
 
 - (void)didCancelContextPicker;
-- (void)didChangeContext;
+- (void)didChangeContext:(Context *)context;
 
 @end
 

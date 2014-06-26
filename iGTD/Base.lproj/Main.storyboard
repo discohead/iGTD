@@ -254,6 +254,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="5lG-57-O8p" id="Pbq-GW-pYq"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -270,6 +273,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="5lG-57-O8p" id="kBf-jm-29q"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -494,6 +500,7 @@
                         <barButtonItem key="rightBarButtonItem" title="Save" id="SwS-Xb-Njw"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="accessoryView" destination="EJT-hB-bJP" id="zCP-GG-zor"/>
                         <outlet property="contactsLabel" destination="q5K-aX-Heh" id="omg-wV-wiJ"/>
                         <outlet property="contextLabel" destination="zgz-qK-5D3" id="nW6-Fk-ogR"/>
                         <outlet property="deadlineLabel" destination="hWw-LZ-ggM" id="iPq-8D-CWu"/>
@@ -505,11 +512,36 @@
                         <outlet property="tagsLabel" destination="mK9-3n-xur" id="6SM-vQ-xfw"/>
                         <outlet property="titleTextField" destination="gfy-Ha-NrT" id="dd5-Kf-G49"/>
                         <segue destination="xwS-S0-5sh" kind="modal" identifier="startTime" id="n4F-c1-JsW"/>
+                        <segue destination="cfV-uN-8df" kind="modal" identifier="deadline" id="JUF-O3-xS7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lmw-jz-m0K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="EJT-hB-bJP" userLabel="Accessory View">
+                    <rect key="frame" x="0.0" y="430" width="320" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5v-M9-Vho" userLabel="Button - Dismiss Keyboard">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="ArialUnicodeMS" family="Arial Unicode MS" pointSize="24"/>
+                            <state key="normal" title="⌄"/>
+                            <connections>
+                                <action selector="dismissKeyboardButtonPressed:" destination="5lG-57-O8p" eventType="touchUpInside" id="nxi-58-cQr"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="y5v-M9-Vho" secondAttribute="centerY" id="DSC-co-JyP"/>
+                        <constraint firstAttribute="bottom" secondItem="y5v-M9-Vho" secondAttribute="bottom" id="S1g-7l-OzX"/>
+                        <constraint firstItem="y5v-M9-Vho" firstAttribute="top" secondItem="EJT-hB-bJP" secondAttribute="top" id="URi-u4-ycF"/>
+                        <constraint firstItem="y5v-M9-Vho" firstAttribute="leading" secondItem="EJT-hB-bJP" secondAttribute="leading" id="Zrr-hG-vIl"/>
+                        <constraint firstAttribute="trailing" secondItem="y5v-M9-Vho" secondAttribute="trailing" id="ofG-ed-BUR"/>
+                        <constraint firstAttribute="centerX" secondItem="y5v-M9-Vho" secondAttribute="centerX" id="rCO-j9-F1B"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1352" y="-605"/>
+            <point key="canvasLocation" x="1346" y="-615"/>
         </scene>
         <!--Start Time Table View Controller-->
         <scene sceneID="xlg-NW-ZVy">
@@ -657,7 +689,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OB8-JO-BXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2670" y="-605"/>
+            <point key="canvasLocation" x="2734" y="-702"/>
         </scene>
         <!--Actions Table View Controller-->
         <scene sceneID="9uW-t9-eWa">
@@ -719,7 +751,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="r94-SU-cxp"/>
         <segue reference="UGk-ls-VZb"/>
+        <segue reference="r94-SU-cxp"/>
+        <segue reference="JUF-O3-xS7"/>
     </inferredMetricsTieBreakers>
 </document>

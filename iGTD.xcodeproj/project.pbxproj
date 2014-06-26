@@ -57,6 +57,7 @@
 		7FE0D2BB1958FA2800074259 /* GTDNewActionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */; };
 		7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */; };
 		7FE0D2C1195A4D7B00074259 /* GTDCalendarPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */; };
+		7FE0D2C4195B5D7600074259 /* GTDkeyboardAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */; };
 		E00334F3AB39472097AF7A0D /* libPods-iGTDTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A5753A18F940D0B87880E8 /* libPods-iGTDTests.a */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +128,8 @@
 		7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDStartTimeTableViewController.m; sourceTree = "<group>"; };
 		7FE0D2BF195A4D7B00074259 /* GTDCalendarPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDCalendarPickerViewController.h; sourceTree = "<group>"; };
 		7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDCalendarPickerViewController.m; sourceTree = "<group>"; };
+		7FE0D2C2195B5D7600074259 /* GTDkeyboardAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDkeyboardAccessoryView.h; sourceTree = "<group>"; };
+		7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDkeyboardAccessoryView.m; sourceTree = "<group>"; };
 		8763DB3DF06C44018BF87646 /* Pods-iGTDTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTDTests.xcconfig"; path = "Pods/Pods-iGTDTests.xcconfig"; sourceTree = "<group>"; };
 		9768F79F824242EA8415B35F /* libPods-iGTD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iGTD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0C9DB346C384718A8D3BA3C /* Pods-iGTD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTD.xcconfig"; path = "Pods/Pods-iGTD.xcconfig"; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 				7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */,
 				7FE0D2BC1959207400074259 /* GTDStartTimeTableViewController.h */,
 				7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */,
+				7FE0D2C2195B5D7600074259 /* GTDkeyboardAccessoryView.h */,
+				7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */,
 				7FE0D2BF195A4D7B00074259 /* GTDCalendarPickerViewController.h */,
 				7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */,
 				7F2BE8C6194519C100D51335 /* GTDMasterViewController.h */,
@@ -473,6 +478,7 @@
 				7F2BE8BB194519C100D51335 /* main.m in Sources */,
 				7F2BE90D1945242600D51335 /* Tag.m in Sources */,
 				7F2BE9071945242600D51335 /* _Project.m in Sources */,
+				7FE0D2C4195B5D7600074259 /* GTDkeyboardAccessoryView.m in Sources */,
 				7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */,
 				7F74FD001950FC6200A0852F /* GTDActionsTableViewController.m in Sources */,
 				7F2BE9091945242600D51335 /* Action.m in Sources */,

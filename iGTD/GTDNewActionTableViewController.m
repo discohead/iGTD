@@ -8,8 +8,9 @@
 
 #import "GTDNewActionTableViewController.h"
 #import "GTDStartTimeTableViewController.h"
+#import "GTDCalendarPickerViewController.h"
 
-@interface GTDNewActionTableViewController ()
+@interface GTDNewActionTableViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
@@ -23,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tagsLabel;
 @property (strong, nonatomic) NSArray *priorityStrings;
 @property (strong, nonatomic) NSArray *startTimeStrings;
+@property (weak, nonatomic) IBOutlet UIView *accessoryView;
 
 @end
 
@@ -52,17 +54,6 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -84,9 +75,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 2 && indexPath.row == 1)
+    if (indexPath.section == 2)
     {
-        [self performSegueWithIdentifier:@"startTime" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        if (indexPath.row == 1)
+        {
+            [self performSegueWithIdentifier:@"startTime" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        } else if (indexPath.row == 2)
+        {
+            [self performSegueWithIdentifier:@"deadline" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        }
+        
     }
 }
 
@@ -107,8 +105,53 @@
             startTimeVC.isAllDay = self.isAllDay;
             startTimeVC.delegate = self;
         }
+    } else if ([segue.identifier isEqualToString:@"deadline"])
+    {
+        if ([segue.destinationViewController isKindOfClass:[GTDCalendarPickerViewController class]])
+        {
+            GTDCalendarPickerViewController *calendarVC = (GTDCalendarPickerViewController *)segue.destinationViewController;
+            calendarVC.delegate = self;
+            calendarVC.isAllDay = self.isAllDay;
+            calendarVC.isDeadlineDate = YES;
+            calendarVC.isScheduledDate = NO;
+            UINavigationBar *navBar = [[UINavigationBar alloc] init];
+            navBar.frame = CGRectMake(0, 0, CGRectGetWidth(calendarVC.view.frame), 64);
+            UINavigationItem *navItem = [[UINavigationItem alloc] init];
+            UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:calendarVC action:@selector(cancelBarButtonItemPressed:)];
+            UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:calendarVC action:@selector(saveBarButtonItemPressed:)];
+            navItem.leftBarButtonItem = cancelButton;
+            navItem.rightBarButtonItem = saveButton;
+            navBar.items = @[navItem];
+            [calendarVC.view addSubview:navBar];
+            
+        }
     }
     
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField.inputAccessoryView == nil)
+    {
+        textField.inputAccessoryView = self.accessoryView;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (IBAction)dismissKeyboardButtonPressed:(UIButton *)sender
+{
+    [self.titleTextField resignFirstResponder];
+    [self.descriptionTextField resignFirstResponder];
 }
 
 #pragma mark - Start Time Delegate
@@ -128,6 +171,23 @@
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - Calendar Picker Delegate
+
+- (void)didCancelDatePicker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didPickDate:(NSDate *)date
+{
+    self.deadline = date;
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    self.deadlineLabel.text = [self dateStringFromDate:date];
+}
+
+#pragma mark - Helper Methods
 
 - (NSString *)dateStringFromDate:(NSDate *)date
 {

@@ -43,6 +43,7 @@
     // Pass the selected object to the new view controller.
 }
 */
+
 - (IBAction)okBarButtonItemPressed:(UIBarButtonItem *)sender
 {
     NSArray *viewControllers = [self.navigationController viewControllers];
@@ -52,6 +53,16 @@
         [startTimeVC.delegate didChangeStartTime:self.startTime withScheduledDate:self.datePicker.date];
     }
     
+}
+
+- (void)cancelBarButtonItemPressed:(id)sender
+{
+    [self.delegate didCancelDatePicker];
+}
+
+- (void)saveBarButtonItemPressed:(id)sender
+{
+    [self.delegate didPickDate:self.datePicker.date];
 }
 
 @end

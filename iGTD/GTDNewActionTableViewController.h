@@ -14,8 +14,9 @@
 #import "Tag.h"
 
 #import "GTDStartTimeTableViewController.h"
+#import "GTDCalendarPickerViewController.h"
 
-@interface GTDNewActionTableViewController : UITableViewController <GTDStartTimeTableViewControllerDelegate>
+@interface GTDNewActionTableViewController : UITableViewController <GTDStartTimeTableViewControllerDelegate, GTDCalendarPickerViewControllerDelegate>
 
 @property (strong, nonatomic) Action *action;
 @property (strong, nonatomic) Project *project;

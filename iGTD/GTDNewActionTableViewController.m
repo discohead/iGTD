@@ -124,8 +124,11 @@
             UINavigationBar *navBar = [[UINavigationBar alloc] init];
             navBar.frame = CGRectMake(0, 0, CGRectGetWidth(calendarVC.view.frame), 64);
             UINavigationItem *navItem = [[UINavigationItem alloc] init];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
             UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:calendarVC action:@selector(cancelBarButtonItemPressed:)];
             UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:calendarVC action:@selector(saveBarButtonItemPressed:)];
+#pragma clang diagnostic pop
             navItem.leftBarButtonItem = cancelButton;
             navItem.rightBarButtonItem = saveButton;
             navBar.items = @[navItem];

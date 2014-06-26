@@ -7,8 +7,6 @@
 //
 
 #import "GTDNewActionTableViewController.h"
-#import "GTDStartTimeTableViewController.h"
-#import "GTDCalendarPickerViewController.h"
 
 @interface GTDNewActionTableViewController () <UITextFieldDelegate>
 
@@ -85,6 +83,12 @@
             [self performSegueWithIdentifier:@"deadline" sender:[tableView cellForRowAtIndexPath:indexPath]];
         }
         
+    } else if (indexPath.section == 3)
+    {
+        if (indexPath.row == 0)
+        {
+            [self performSegueWithIdentifier:@"context" sender:[tableView cellForRowAtIndexPath:indexPath]];
+        }
     }
 }
 
@@ -95,6 +99,9 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+    
     if ([segue.identifier isEqualToString:@"startTime"])
     {
         if ([segue.destinationViewController isKindOfClass:[UINavigationController class]])
@@ -123,6 +130,30 @@
             navItem.rightBarButtonItem = saveButton;
             navBar.items = @[navItem];
             [calendarVC.view addSubview:navBar];
+            
+        }
+    } else if ([segue.identifier isEqualToString:@"context"])
+    {
+        if ([segue.destinationViewController isKindOfClass:[GTDContextPickerTableViewController class]])
+        {
+            GTDContextPickerTableViewController *contextVC = (GTDContextPickerTableViewController *)segue.destinationViewController;
+            contextVC.delegate = self;
+            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Context"];
+            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+            [fetchRequest setSortDescriptors:@[sortDescriptor]];
+            NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:@"Context"];
+            contextVC.fetchedResultsController = fetchedResultsController;
+            fetchedResultsController.delegate = contextVC;
+            
+            NSError *error = nil;
+            if (![contextVC.fetchedResultsController performFetch:&error]) {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+            
+            NSLog(@"fetchedObjects count = %i", [[contextVC.fetchedResultsController fetchedObjects] count]);
             
         }
     }

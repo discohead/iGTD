@@ -58,7 +58,7 @@
 		7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */; };
 		7FE0D2C1195A4D7B00074259 /* GTDCalendarPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */; };
 		7FE0D2C4195B5D7600074259 /* GTDkeyboardAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */; };
-		7FE0D2C7195BBA4A00074259 /* GTDContextPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C6195BBA4A00074259 /* GTDContextPickerTableViewController.m */; };
+		7FE0D2C7195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C6195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m */; };
 		E00334F3AB39472097AF7A0D /* libPods-iGTDTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A5753A18F940D0B87880E8 /* libPods-iGTDTests.a */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +116,7 @@
 		7F2BE9021945242600D51335 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		7F2BE9031945242600D51335 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
 		7F2BE90E194525DA00D51335 /* ActionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSpec.m; sourceTree = "<group>"; };
+		7F4F4B9E1961E1AB00677874 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
 		7F74FCF91950AD6900A0852F /* ProjectSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSpec.m; sourceTree = "<group>"; };
 		7F74FCFB1950C14300A0852F /* GTDRootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDRootTableViewController.h; sourceTree = "<group>"; };
 		7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDRootTableViewController.m; sourceTree = "<group>"; };
@@ -131,8 +132,8 @@
 		7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDCalendarPickerViewController.m; sourceTree = "<group>"; };
 		7FE0D2C2195B5D7600074259 /* GTDkeyboardAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDkeyboardAccessoryView.h; sourceTree = "<group>"; };
 		7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDkeyboardAccessoryView.m; sourceTree = "<group>"; };
-		7FE0D2C5195BBA4A00074259 /* GTDContextPickerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDContextPickerTableViewController.h; sourceTree = "<group>"; };
-		7FE0D2C6195BBA4A00074259 /* GTDContextPickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDContextPickerTableViewController.m; sourceTree = "<group>"; };
+		7FE0D2C5195BBA4A00074259 /* GTDOrganizationPickerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDOrganizationPickerTableViewController.h; sourceTree = "<group>"; };
+		7FE0D2C6195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDOrganizationPickerTableViewController.m; sourceTree = "<group>"; };
 		8763DB3DF06C44018BF87646 /* Pods-iGTDTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTDTests.xcconfig"; path = "Pods/Pods-iGTDTests.xcconfig"; sourceTree = "<group>"; };
 		9768F79F824242EA8415B35F /* libPods-iGTD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iGTD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0C9DB346C384718A8D3BA3C /* Pods-iGTD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iGTD.xcconfig"; path = "Pods/Pods-iGTD.xcconfig"; sourceTree = "<group>"; };
@@ -206,8 +207,8 @@
 			children = (
 				7F2BE8EF1945242600D51335 /* Model */,
 				7F2BE8C0194519C100D51335 /* Main.storyboard */,
-				7FE0D2C5195BBA4A00074259 /* GTDContextPickerTableViewController.h */,
-				7FE0D2C6195BBA4A00074259 /* GTDContextPickerTableViewController.m */,
+				7FE0D2C5195BBA4A00074259 /* GTDOrganizationPickerTableViewController.h */,
+				7FE0D2C6195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m */,
 				7F74FCFB1950C14300A0852F /* GTDRootTableViewController.h */,
 				7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */,
 				7FE0D2B91958FA2800074259 /* GTDNewActionTableViewController.h */,
@@ -236,6 +237,7 @@
 			children = (
 				7F2BE8BD194519C100D51335 /* GTDAppDelegate.h */,
 				7F2BE8BE194519C100D51335 /* GTDAppDelegate.m */,
+				7F4F4B9E1961E1AB00677874 /* Podfile */,
 				7F2BE8B6194519C100D51335 /* iGTD-Info.plist */,
 				7F2BE8B7194519C100D51335 /* InfoPlist.strings */,
 				7F2BE8BA194519C100D51335 /* main.m */,
@@ -487,7 +489,7 @@
 				7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */,
 				7F74FD001950FC6200A0852F /* GTDActionsTableViewController.m in Sources */,
 				7F2BE9091945242600D51335 /* Action.m in Sources */,
-				7FE0D2C7195BBA4A00074259 /* GTDContextPickerTableViewController.m in Sources */,
+				7FE0D2C7195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m in Sources */,
 				7F2BE8C8194519C100D51335 /* GTDMasterViewController.m in Sources */,
 				7F2BE8C5194519C100D51335 /* iGTD.xcdatamodeld in Sources */,
 				7F2BE9051945242600D51335 /* _Contact.m in Sources */,

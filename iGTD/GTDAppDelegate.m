@@ -26,7 +26,7 @@
     // Override point for customization after application launch.
     [MagicalRecord setupCoreDataStack];
     
-    // [self createTestData];
+    //[self createTestData];
     
     return YES;
 }

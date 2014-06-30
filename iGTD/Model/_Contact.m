@@ -12,6 +12,7 @@ const struct ContactAttributes ContactAttributes = {
 	.email = @"email",
 	.firstName = @"firstName",
 	.lastName = @"lastName",
+	.name = @"name",
 	.phone = @"phone",
 	.relationship = @"relationship",
 	.state = @"state",
@@ -115,6 +116,13 @@ const struct ContactFetchedProperties ContactFetchedProperties = {
 
 
 @dynamic lastName;
+
+
+
+
+
+
+@dynamic name;
 
 
 

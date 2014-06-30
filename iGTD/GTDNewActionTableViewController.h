@@ -15,11 +15,11 @@
 
 #import "GTDStartTimeTableViewController.h"
 #import "GTDCalendarPickerViewController.h"
-#import "GTDContextPickerTableViewController.h"
+#import "GTDOrganizationPickerTableViewController.h"
 
 @interface GTDNewActionTableViewController : UITableViewController <GTDStartTimeTableViewControllerDelegate,
                                                                     GTDCalendarPickerViewControllerDelegate,
-                                                                    GTDContextPickerTableViewControllerDelegate>
+                                                                    GTDOrganizationPickerTableViewControllerDelegate>
 
 @property (strong, nonatomic) Action *action;
 @property (strong, nonatomic) Project *project;

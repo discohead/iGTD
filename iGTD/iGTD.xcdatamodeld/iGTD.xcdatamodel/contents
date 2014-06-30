@@ -27,6 +27,7 @@
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" attributeType="String" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="relationship" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
@@ -63,7 +64,7 @@
     </entity>
     <elements>
         <element name="Action" positionX="261" positionY="189" width="128" height="268"/>
-        <element name="Contact" positionX="72" positionY="441" width="128" height="270"/>
+        <element name="Contact" positionX="72" positionY="441" width="128" height="283"/>
         <element name="Context" positionX="36" positionY="153" width="128" height="105"/>
         <element name="Project" positionX="-234" positionY="278" width="128" height="208"/>
         <element name="Tag" positionX="628" positionY="279" width="128" height="120"/>

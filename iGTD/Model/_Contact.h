@@ -13,6 +13,7 @@ extern const struct ContactAttributes {
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
 	__unsafe_unretained NSString *lastName;
+	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *phone;
 	__unsafe_unretained NSString *relationship;
 	__unsafe_unretained NSString *state;
@@ -37,6 +38,7 @@ extern const struct ContactFetchedProperties {
 
 
 @class NSObject;
+
 
 
 
@@ -133,6 +135,16 @@ extern const struct ContactFetchedProperties {
 
 
 //- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* name;
+
+
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -272,6 +284,12 @@ extern const struct ContactFetchedProperties {
 
 - (NSString*)primitiveLastName;
 - (void)setPrimitiveLastName:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
 
 
 

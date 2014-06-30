@@ -16,4 +16,15 @@
     return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
 }
 
+-(NSString *)name {
+    
+    [self willAccessValueForKey:@"name"];
+    
+    NSString *fullName = [@[self.firstName, self.lastName] componentsJoinedByString:@" "];
+    
+    [self didAccessValueForKey:@"name"];
+    
+    return fullName;
+}
+
 @end

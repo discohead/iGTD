@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *tagsLabel;
 @property (strong, nonatomic) NSArray *priorityStrings;
 @property (strong, nonatomic) NSArray *startTimeStrings;
+@property (strong, nonatomic) NSArray *organizationStrings;
 @property (weak, nonatomic) IBOutlet UIView *accessoryView;
 
 @end
@@ -47,6 +48,7 @@
         // Custom initialization
         _priorityStrings = @[@"None", @"Low", @"Medium", @"High"];
         _startTimeStrings = @[@"Inbox", @"Today", @"Next", @"Tomorrow", @"Scheduled", @"Someday", @"Waiting"];
+        _organizationStrings = @[@"Context", @"Project", @"Contacts", @"Tags", @"Color"];
         _isAllDay = YES;
     }
     return self;
@@ -85,10 +87,9 @@
         
     } else if (indexPath.section == 3)
     {
-        if (indexPath.row == 0)
-        {
-            [self performSegueWithIdentifier:@"context" sender:[tableView cellForRowAtIndexPath:indexPath]];
-        }
+        
+        [self performSegueWithIdentifier:@"organizationPicker" sender:[tableView cellForRowAtIndexPath:indexPath]];
+
     }
 }
 
@@ -124,31 +125,63 @@
             UINavigationBar *navBar = [[UINavigationBar alloc] init];
             navBar.frame = CGRectMake(0, 0, CGRectGetWidth(calendarVC.view.frame), 64);
             UINavigationItem *navItem = [[UINavigationItem alloc] init];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
             UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:calendarVC action:@selector(cancelBarButtonItemPressed:)];
             UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:calendarVC action:@selector(saveBarButtonItemPressed:)];
+#pragma clang diagnostic pop
             navItem.leftBarButtonItem = cancelButton;
             navItem.rightBarButtonItem = saveButton;
             navBar.items = @[navItem];
             [calendarVC.view addSubview:navBar];
             
         }
-    } else if ([segue.identifier isEqualToString:@"context"])
+    } else if ([segue.identifier isEqualToString:@"organizationPicker"])
     {
         if ([segue.destinationViewController isKindOfClass:[UINavigationController class]])
         {
             UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
             NSArray *vcs = [nav viewControllers];
-            GTDContextPickerTableViewController *contextVC = [vcs firstObject];
-            contextVC.delegate = self;
-            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Context"];
-            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+            GTDOrganizationPickerTableViewController *orgVC = [vcs firstObject];
+            orgVC.delegate = self;
+            NSString *entityName;
+            NSString *sortKey = @"name";
+            if ([sender isKindOfClass:[UITableViewCell class]])
+            {
+                UITableViewCell *cell = (UITableViewCell *)sender;
+                NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+                entityName = self.organizationStrings[indexPath.row];
+                
+                // Trim "s" from Contacts or Tags to get proper entity name
+                if ([[entityName substringFromIndex:entityName.length-1] isEqualToString: @"s"]) entityName = [entityName substringToIndex:entityName.length-1];
+                
+                // Change sort key for Contact or Tag
+                if ([entityName isEqualToString:@"Contact"])
+                {
+                    sortKey = @"lastName";
+                    orgVC.currentSetting = self.contacts;
+                }
+                else if ([entityName isEqualToString:@"Tag"])
+                {
+                    sortKey = @"title";
+                    orgVC.currentSetting = self.tags;
+                } else
+                {
+                    orgVC.currentSetting = [self valueForKey:[entityName lowercaseString]];
+                }
+        
+            }
+            NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
             [fetchRequest setSortDescriptors:@[sortDescriptor]];
-            NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:@"Context"];
-            contextVC.fetchedResultsController = fetchedResultsController;
-            fetchedResultsController.delegate = contextVC;
+            NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:entityName];
+            orgVC.fetchedResultsController = fetchedResultsController;
+            fetchedResultsController.delegate = orgVC;
+            orgVC.entityName = entityName;
+            orgVC.navigationItem.title = entityName;
             
             NSError *error = nil;
-            if (![contextVC.fetchedResultsController performFetch:&error]) {
+            if (![orgVC.fetchedResultsController performFetch:&error]) {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -218,9 +251,9 @@
     self.deadlineLabel.text = [self dateStringFromDate:date];
 }
 
-#pragma mark - Context Picker Delegate
+#pragma mark - Organization Picker Delegate
 
-- (void)didCancelContextPicker
+- (void)didCancelOrganizationPicker
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -229,6 +262,40 @@
 {
     self.context = context;
     self.contextLabel.text = [context description];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didChangeProject:(Project *)project
+{
+    
+    // Refactor using KVO?
+    
+    self.project = project;
+    self.projectLabel.text = [project description];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didChangeContacts:(NSSet *)contacts
+{
+    self.contacts = contacts;
+    __block NSMutableArray *contactNames = [NSMutableArray array];
+    [contacts enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        Contact *contact = (Contact *)obj;
+        [contactNames addObject:[contact firstName]];
+    }];
+    self.contactsLabel.text = [contactNames componentsJoinedByString:@", "];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didChangeTags:(NSSet *)tags
+{
+    self.tags = tags;
+    __block NSMutableArray *tagTitles = [NSMutableArray array];
+    [tags enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        Tag *tag = (Tag *)obj;
+        [tagTitles addObject:[tag title]];
+    }];
+    self.tagsLabel.text = [tagTitles componentsJoinedByString:@", "];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -297,6 +364,33 @@
                 break;
         }
     }
+}
+- (IBAction)saveBarButtonItemPressed:(id)sender
+{
+    Action *action = [Action createEntity];
+    action.title = self.titleTextField.text;
+    action.textDescription = self.descriptionTextField.text;
+    action.priority = self.priority;
+    action.startTime = self.startTime;
+    action.scheduledDate = self.scheduledDate;
+    action.deadline = self.deadline;
+    action.context = self.context;
+    action.project = self.project;
+    action.contacts = self.contacts;
+    action.tags = self.tags;
+    
+    NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+    
+    [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (!success)
+        {
+            NSLog(@"Error saving New Action: %@", [error localizedDescription]);
+        } else
+        {
+            NSLog(@"New Action Saved!");
+        }
+    }];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)didCancel

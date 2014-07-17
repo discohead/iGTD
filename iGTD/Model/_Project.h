@@ -9,9 +9,10 @@ extern const struct ProjectAttributes {
 	__unsafe_unretained NSString *completed;
 	__unsafe_unretained NSString *created;
 	__unsafe_unretained NSString *deadline;
-	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *scheduledDate;
 	__unsafe_unretained NSString *startTime;
 	__unsafe_unretained NSString *textDescription;
+	__unsafe_unretained NSString *title;
 } ProjectAttributes;
 
 extern const struct ProjectRelationships {
@@ -30,6 +31,7 @@ extern const struct ProjectFetchedProperties {
 @class Tag;
 
 @class NSObject;
+
 
 
 
@@ -94,11 +96,11 @@ extern const struct ProjectFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSDate* scheduledDate;
 
 
 
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateScheduledDate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -123,6 +125,16 @@ extern const struct ProjectFetchedProperties {
 
 
 //- (BOOL)validateTextDescription:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* title;
+
+
+
+//- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -208,8 +220,8 @@ extern const struct ProjectFetchedProperties {
 
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
+- (NSDate*)primitiveScheduledDate;
+- (void)setPrimitiveScheduledDate:(NSDate*)value;
 
 
 
@@ -225,6 +237,12 @@ extern const struct ProjectFetchedProperties {
 
 - (NSString*)primitiveTextDescription;
 - (void)setPrimitiveTextDescription:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveTitle;
+- (void)setPrimitiveTitle:(NSString*)value;
 
 
 

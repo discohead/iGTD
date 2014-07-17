@@ -4,19 +4,11 @@
 #import "_Contact.h"
 
 const struct ContactAttributes ContactAttributes = {
-	.address1 = @"address1",
-	.address2 = @"address2",
-	.birthday = @"birthday",
-	.city = @"city",
+	.abRecordID = @"abRecordID",
 	.color = @"color",
-	.email = @"email",
 	.firstName = @"firstName",
 	.lastName = @"lastName",
 	.name = @"name",
-	.phone = @"phone",
-	.relationship = @"relationship",
-	.state = @"state",
-	.zip = @"zip",
 };
 
 const struct ContactRelationships ContactRelationships = {
@@ -54,8 +46,8 @@ const struct ContactFetchedProperties ContactFetchedProperties = {
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"zipValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"zip"];
+	if ([key isEqualToString:@"abRecordIDValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"abRecordID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -66,42 +58,33 @@ const struct ContactFetchedProperties ContactFetchedProperties = {
 
 
 
-@dynamic address1;
+@dynamic abRecordID;
 
 
 
+- (int32_t)abRecordIDValue {
+	NSNumber *result = [self abRecordID];
+	return [result intValue];
+}
 
+- (void)setAbRecordIDValue:(int32_t)value_ {
+	[self setAbRecordID:[NSNumber numberWithInt:value_]];
+}
 
+- (int32_t)primitiveAbRecordIDValue {
+	NSNumber *result = [self primitiveAbRecordID];
+	return [result intValue];
+}
 
-@dynamic address2;
-
-
-
-
-
-
-@dynamic birthday;
-
-
-
-
-
-
-@dynamic city;
-
+- (void)setPrimitiveAbRecordIDValue:(int32_t)value_ {
+	[self setPrimitiveAbRecordID:[NSNumber numberWithInt:value_]];
+}
 
 
 
 
 
 @dynamic color;
-
-
-
-
-
-
-@dynamic email;
 
 
 
@@ -124,53 +107,6 @@ const struct ContactFetchedProperties ContactFetchedProperties = {
 
 @dynamic name;
 
-
-
-
-
-
-@dynamic phone;
-
-
-
-
-
-
-@dynamic relationship;
-
-
-
-
-
-
-@dynamic state;
-
-
-
-
-
-
-@dynamic zip;
-
-
-
-- (int32_t)zipValue {
-	NSNumber *result = [self zip];
-	return [result intValue];
-}
-
-- (void)setZipValue:(int32_t)value_ {
-	[self setZip:[NSNumber numberWithInt:value_]];
-}
-
-- (int32_t)primitiveZipValue {
-	NSNumber *result = [self primitiveZip];
-	return [result intValue];
-}
-
-- (void)setPrimitiveZipValue:(int32_t)value_ {
-	[self setPrimitiveZip:[NSNumber numberWithInt:value_]];
-}
 
 
 

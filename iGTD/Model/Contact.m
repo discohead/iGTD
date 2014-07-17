@@ -13,7 +13,7 @@
 // Custom logic goes here.
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+    return self.name;
 }
 
 -(NSString *)name {

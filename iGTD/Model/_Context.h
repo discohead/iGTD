@@ -6,7 +6,7 @@
 
 extern const struct ContextAttributes {
 	__unsafe_unretained NSString *color;
-	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *title;
 } ContextAttributes;
 
 extern const struct ContextRelationships {
@@ -46,11 +46,11 @@ extern const struct ContextFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSString* title;
 
 
 
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -96,8 +96,8 @@ extern const struct ContextFetchedProperties {
 
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
+- (NSString*)primitiveTitle;
+- (void)setPrimitiveTitle:(NSString*)value;
 
 
 

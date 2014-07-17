@@ -5,7 +5,7 @@
 
 const struct ContextAttributes ContextAttributes = {
 	.color = @"color",
-	.name = @"name",
+	.title = @"title",
 };
 
 const struct ContextRelationships ContextRelationships = {
@@ -56,7 +56,7 @@ const struct ContextFetchedProperties ContextFetchedProperties = {
 
 
 
-@dynamic name;
+@dynamic title;
 
 
 

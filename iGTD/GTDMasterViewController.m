@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Jared McFarland. All rights reserved.
 //
 
+
 #import "GTDMasterViewController.h"
 #import "GTDActionsTableViewController.h"
+#import "GTDNewContextOrTagTableViewController.h"
 #import "Project.h"
 #import "Context.h"
 #import "Tag.h"
@@ -19,9 +21,14 @@
 
 @implementation GTDMasterViewController
 
-- (void)awakeFromNib
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    [super awakeFromNib];
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    }
+    return self;
 }
 
 - (void)viewDidLoad
@@ -43,7 +50,14 @@
 - (void)insertNewObject:(id)sender
 {
     NSString *entityName = [[[self.fetchedResultsController fetchRequest] entity] name];
-    [self performSegueWithIdentifier:entityName sender:sender];
+    if ([entityName isEqualToString:@"Contact"])
+    {
+        [self showNewPersonViewController];
+    } else
+    {
+        [self performSegueWithIdentifier:entityName sender:sender];
+    }
+    
 }
 
 #pragma mark - Table View
@@ -107,9 +121,7 @@
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         
         GTDActionsTableViewController *actionsVC = (GTDActionsTableViewController *)[segue destinationViewController];
-        
-        
-        
+
         NSFetchRequest *fetchRequest;
         NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Action" inManagedObjectContext:moc];
@@ -138,8 +150,91 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+    } else if ([segue.identifier isEqualToString:@"Context"])
+    {
+        GTDNewContextOrTagTableViewController *contextVC = (GTDNewContextOrTagTableViewController *)segue.destinationViewController;
+        contextVC.isContext = YES;
+        contextVC.navigationItem.title = @"New Context";
     }
 }
+
+-(void)showNewPersonViewController
+{
+	ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
+	picker.newPersonViewDelegate = self;
+	
+    [self.navigationController pushViewController:picker animated:YES];
+}
+
+#pragma mark ABNewPersonViewControllerDelegate methods
+// Dismisses the new-person view controller.
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonViewController didCompleteWithNewPerson:(ABRecordRef)person
+{
+    Contact *newContact = [Contact createEntity];
+    newContact.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
+    newContact.firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
+    newContact.lastName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+    
+    NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+    
+    [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (!success)
+        {
+            NSLog(@"Error saving New Contact: %@", [error localizedDescription]);
+        } else
+        {
+            NSLog(@"New Contact Saved!");
+        }
+    }];
+    
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)checkAddressBookAccess
+{
+    switch (ABAddressBookGetAuthorizationStatus())
+    {
+            // Update our UI if the user has granted access to their Contacts
+        case  kABAuthorizationStatusAuthorized:
+            break;
+            // Prompt the user for access to Contacts if there is no definitive answer
+        case  kABAuthorizationStatusNotDetermined :
+            [self requestAddressBookAccess];
+            break;
+            // Display a message if the user has denied or restricted access to Contacts
+        case  kABAuthorizationStatusDenied:
+        case  kABAuthorizationStatusRestricted:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning"
+                                                            message:@"Permission was not granted for Contacts."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+// Prompt the user for access to their Address Book data
+-(void)requestAddressBookAccess
+{
+    
+    ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
+                                             {
+                                                 if (granted)
+                                                 {
+                                                    NSLog(@"AddressBook Access Granted!");
+                                                     
+                                                 } else
+                                                 {
+                                                     NSLog(@"Error accessing AddressBook: %@", error);
+                                                 }
+                                             });
+}
+
 
 #pragma mark - Fetched results controller
 

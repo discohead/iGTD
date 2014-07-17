@@ -24,62 +24,108 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    // _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     [MagicalRecord setupCoreDataStack];
-    
-    //[self createTestData];
+    // [self checkAddressBookAccess];
     
     return YES;
 }
 
+// Check the authorization status of our application for Address Book
+-(void)checkAddressBookAccess
+{
+    switch (ABAddressBookGetAuthorizationStatus())
+    {
+            // Update our UI if the user has granted access to their Contacts
+        case  kABAuthorizationStatusAuthorized:
+            [self createTestData];
+            break;
+            // Prompt the user for access to Contacts if there is no definitive answer
+        case  kABAuthorizationStatusNotDetermined :
+            [self requestAddressBookAccess];
+            break;
+            // Display a message if the user has denied or restricted access to Contacts
+        case  kABAuthorizationStatusDenied:
+        case  kABAuthorizationStatusRestricted:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning"
+                                                            message:@"Permission was not granted for Contacts."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+// Prompt the user for access to their Address Book data
+-(void)requestAddressBookAccess
+{
+    GTDAppDelegate * __weak weakSelf = self;
+    
+    ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
+                                             {
+                                                 if (granted)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         NSLog(@"AddressBook Access Granted!");
+                                                         [weakSelf createTestData];
+                                                         
+                                                     });
+
+                                                 } else
+                                                 {
+                                                     NSLog(@"Error accessing AddressBook: %@", error);
+                                                 }
+                                             });
+}
+
+
 - (void)createTestData
 {
     Context *home = [Context createEntity];
-    home.name = @"Home";
+    home.title = @"Home";
     home.color = [UIColor blueColor];
     
     Context *office = [Context createEntity];
-    office.name = @"Office";
+    office.title = @"Office";
     office.color = [UIColor redColor];
     
     Project *iosProject = [Project createEntity];
-    iosProject.name = @"Learn iOS";
+    iosProject.title = @"Learn iOS";
     iosProject.textDescription = @"Let's learn iOS for fun and profit!";
     iosProject.deadline = [NSDate distantFuture];
     iosProject.color = home.color;
     iosProject.context = home;
     
     Project *workProject = [Project createEntity];
-    workProject.name = @"Prepare for DS season";
+    workProject.title = @"Prepare for DS season";
     workProject.textDescription = @"Build system and gameplan for this year's DS stores.";
     workProject.deadline = [NSDate distantFuture];
     workProject.color = office.color;
     workProject.context = office;
     
+    NSArray *people = (NSArray *)CFBridgingRelease(ABAddressBookCopyPeopleWithName(self.addressBook, CFSTR("Drusts")));
+    NSArray *moms = (NSArray *)CFBridgingRelease(ABAddressBookCopyPeopleWithName(self.addressBook, CFSTR("Sue Souders")));
+    
     Contact *natalie = [Contact createEntity];
-    natalie.firstName = @"Natalie";
-    natalie.lastName = @"Drusts";
-    natalie.phone = @"808-333-5555";
-    natalie.email = @"natalieskye4@yahoo.com";
-    natalie.address1 = @"5255 Harmony Ave.";
-    natalie.address2 = @"Apt 7";
-    natalie.city = @"North Hollywood";
-    natalie.state = @"CA";
-    natalie.birthday = [NSDate date];
-    natalie.relationship = @"Girlfriend";
+    // Use AddressBook
+    ABRecordRef drusts = (__bridge ABRecordRef)[people objectAtIndex:0];
+    natalie.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(drusts)];
+    natalie.firstName = CFBridgingRelease(ABRecordCopyValue(drusts, kABPersonFirstNameProperty));
+    natalie.lastName = CFBridgingRelease(ABRecordCopyValue(drusts, kABPersonLastNameProperty));
     natalie.color = office.color;
     [workProject addContactsObject:natalie];
     
     Contact *mom = [Contact createEntity];
-    mom.firstName = @"Sue";
-    mom.lastName = @"Souders";
-    mom.phone = @"937-369-4870";
-    mom.email = @"ssouders112781@hotmail.com";
-    mom.address1 = @"10108 Pond Creek Rd.";
-    mom.address2 = nil;
-    mom.city = @"Alexandria";
-    mom.state = @"OH";
-    mom.birthday = [NSDate distantFuture];
-    mom.relationship = @"Mother";
+    // Use AddressBook
+    ABRecordRef souders = (__bridge ABRecordRef)[moms objectAtIndex:0];
+    mom.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(souders)];
+    mom.firstName = CFBridgingRelease(ABRecordCopyValue(souders, kABPersonFirstNameProperty));
+    mom.lastName = CFBridgingRelease(ABRecordCopyValue(souders, kABPersonLastNameProperty));
     mom.color = home.color;
     [iosProject addContactsObject:mom];
     
@@ -87,13 +133,13 @@
     education.title = @"Education";
     education.color = [UIColor yellowColor];
     [iosProject addTagsObject:education];
-    [mom addTagsObject:education];
+    //[mom addTagsObject:education];
     
     Tag *fun = [Tag createEntity];
     fun.title = @"Fun";
     fun.color = [UIColor brownColor];
     [workProject addTagsObject:fun];
-    [natalie addTagsObject:fun];
+    //[natalie addTagsObject:fun];
     
     Action *a1 = [Action createEntity];
     a1.title = @"Learn Core Data";
@@ -106,8 +152,8 @@
     a1.context = home;
     [a1 addTagsObject:education];
     [iosProject addActionsObject:a1];
-    [a1 addContactsObject:natalie];
-    [a1 addContactsObject:mom];
+    //[a1 addContactsObject:natalie];
+    //[a1 addContactsObject:mom];
     
     Action *a2 = [Action createEntity];
     a2.title = @"Organize Filesystem";
@@ -120,7 +166,7 @@
     a2.context = office;
     [a2 addTagsObject:fun];
     [workProject addActionsObject:a2];
-    [a2 addContactsObject:natalie];
+    //[a2 addContactsObject:natalie];
     
     Action *a3 = [Action createEntity];
     a3.title = @"Refactor Code";
@@ -134,7 +180,7 @@
     [a3 addTagsObject:education];
     [a3 addTagsObject:fun];
     [iosProject addActionsObject:a3];
-    [a3 addContactsObject:mom];
+    //[a3 addContactsObject:mom];
     
     Action *a4 = [Action createEntity];
     a4.title = @"Call Deb Thomas";
@@ -147,7 +193,7 @@
     a4.context = office;
     [a4 addTagsObject:fun];
     [workProject addActionsObject:a4];
-    [a4 addContactsObject:mom];
+    //[a4 addContactsObject:mom];
     
     NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
     

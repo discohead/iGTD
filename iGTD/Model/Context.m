@@ -14,7 +14,7 @@
 
 -(NSString *)description
 {
-    return self.name;
+    return self.title;
 }
 
 @end

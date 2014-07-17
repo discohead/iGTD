@@ -8,9 +8,10 @@ const struct ProjectAttributes ProjectAttributes = {
 	.completed = @"completed",
 	.created = @"created",
 	.deadline = @"deadline",
-	.name = @"name",
+	.scheduledDate = @"scheduledDate",
 	.startTime = @"startTime",
 	.textDescription = @"textDescription",
+	.title = @"title",
 };
 
 const struct ProjectRelationships ProjectRelationships = {
@@ -113,7 +114,7 @@ const struct ProjectFetchedProperties ProjectFetchedProperties = {
 
 
 
-@dynamic name;
+@dynamic scheduledDate;
 
 
 
@@ -147,6 +148,13 @@ const struct ProjectFetchedProperties ProjectFetchedProperties = {
 
 
 @dynamic textDescription;
+
+
+
+
+
+
+@dynamic title;
 
 
 

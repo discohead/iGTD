@@ -131,12 +131,9 @@
         if ([cellText isEqualToString:@"Contacts"])
         {
             sortKey = @"lastName";
-        } else if ([cellText isEqualToString:@"Tags"])
-        {
-            sortKey = @"title";
         } else
         {
-            sortKey = @"name";
+            sortKey = @"title";
         }
         
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];

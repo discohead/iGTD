@@ -5,19 +5,11 @@
 
 
 extern const struct ContactAttributes {
-	__unsafe_unretained NSString *address1;
-	__unsafe_unretained NSString *address2;
-	__unsafe_unretained NSString *birthday;
-	__unsafe_unretained NSString *city;
+	__unsafe_unretained NSString *abRecordID;
 	__unsafe_unretained NSString *color;
-	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *firstName;
 	__unsafe_unretained NSString *lastName;
 	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *phone;
-	__unsafe_unretained NSString *relationship;
-	__unsafe_unretained NSString *state;
-	__unsafe_unretained NSString *zip;
 } ContactAttributes;
 
 extern const struct ContactRelationships {
@@ -34,15 +26,7 @@ extern const struct ContactFetchedProperties {
 @class Tag;
 
 
-
-
-
 @class NSObject;
-
-
-
-
-
 
 
 
@@ -60,41 +44,15 @@ extern const struct ContactFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* address1;
+@property (nonatomic, strong) NSNumber* abRecordID;
 
 
 
-//- (BOOL)validateAddress1:(id*)value_ error:(NSError**)error_;
+@property int32_t abRecordIDValue;
+- (int32_t)abRecordIDValue;
+- (void)setAbRecordIDValue:(int32_t)value_;
 
-
-
-
-
-@property (nonatomic, strong) NSString* address2;
-
-
-
-//- (BOOL)validateAddress2:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSDate* birthday;
-
-
-
-//- (BOOL)validateBirthday:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* city;
-
-
-
-//- (BOOL)validateCity:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateAbRecordID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -105,16 +63,6 @@ extern const struct ContactFetchedProperties {
 
 
 //- (BOOL)validateColor:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* email;
-
-
-
-//- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -145,50 +93,6 @@ extern const struct ContactFetchedProperties {
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* phone;
-
-
-
-//- (BOOL)validatePhone:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* relationship;
-
-
-
-//- (BOOL)validateRelationship:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* state;
-
-
-
-//- (BOOL)validateState:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSNumber* zip;
-
-
-
-@property int32_t zipValue;
-- (int32_t)zipValue;
-- (void)setZipValue:(int32_t)value_;
-
-//- (BOOL)validateZip:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -240,38 +144,17 @@ extern const struct ContactFetchedProperties {
 @interface _Contact (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveAddress1;
-- (void)setPrimitiveAddress1:(NSString*)value;
+- (NSNumber*)primitiveAbRecordID;
+- (void)setPrimitiveAbRecordID:(NSNumber*)value;
 
-
-
-
-- (NSString*)primitiveAddress2;
-- (void)setPrimitiveAddress2:(NSString*)value;
-
-
-
-
-- (NSDate*)primitiveBirthday;
-- (void)setPrimitiveBirthday:(NSDate*)value;
-
-
-
-
-- (NSString*)primitiveCity;
-- (void)setPrimitiveCity:(NSString*)value;
+- (int32_t)primitiveAbRecordIDValue;
+- (void)setPrimitiveAbRecordIDValue:(int32_t)value_;
 
 
 
 
 - (id)primitiveColor;
 - (void)setPrimitiveColor:(id)value;
-
-
-
-
-- (NSString*)primitiveEmail;
-- (void)setPrimitiveEmail:(NSString*)value;
 
 
 
@@ -290,33 +173,6 @@ extern const struct ContactFetchedProperties {
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-
-
-- (NSString*)primitivePhone;
-- (void)setPrimitivePhone:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveRelationship;
-- (void)setPrimitiveRelationship:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveState;
-- (void)setPrimitiveState:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveZip;
-- (void)setPrimitiveZip:(NSNumber*)value;
-
-- (int32_t)primitiveZipValue;
-- (void)setPrimitiveZipValue:(int32_t)value_;
 
 
 

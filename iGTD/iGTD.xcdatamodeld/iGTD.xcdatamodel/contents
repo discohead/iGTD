@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Action" representedClassName="Action">
         <attribute name="color" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="completed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -19,26 +19,18 @@
         <userInfo/>
     </entity>
     <entity name="Contact" representedClassName="Contact" syncable="YES">
-        <attribute name="address1" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="address2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="birthday" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="abRecordID" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="color" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
-        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="relationship" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="zip" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="contacts" inverseEntity="Action" syncable="YES"/>
         <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="contacts" inverseEntity="Project" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tag" inverseName="contacts" inverseEntity="Tag" syncable="YES"/>
     </entity>
     <entity name="Context" representedClassName="Context" syncable="YES">
         <attribute name="color" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="context" inverseEntity="Action" syncable="YES"/>
         <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="context" inverseEntity="Project" syncable="YES"/>
     </entity>
@@ -47,9 +39,10 @@
         <attribute name="completed" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="created" attributeType="Date" syncable="YES"/>
         <attribute name="deadline" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="scheduledDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="startTime" optional="YES" attributeType="Integer 16" minValueString="1" maxValueString="5" defaultValueString="2" syncable="YES"/>
         <attribute name="textDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="actions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Action" inverseName="project" inverseEntity="Action" syncable="YES"/>
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="projects" inverseEntity="Contact" syncable="YES"/>
         <relationship name="context" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Context" inverseName="projects" inverseEntity="Context" syncable="YES"/>
@@ -63,10 +56,10 @@
         <relationship name="projects" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Project" inverseName="tags" inverseEntity="Project" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Action" positionX="261" positionY="189" width="128" height="268"/>
-        <element name="Contact" positionX="72" positionY="441" width="128" height="283"/>
+        <element name="Action" positionX="261" positionY="189" width="128" height="270"/>
+        <element name="Contact" positionX="72" positionY="441" width="128" height="165"/>
         <element name="Context" positionX="36" positionY="153" width="128" height="105"/>
-        <element name="Project" positionX="-234" positionY="278" width="128" height="208"/>
+        <element name="Project" positionX="-234" positionY="278" width="128" height="225"/>
         <element name="Tag" positionX="628" positionY="279" width="128" height="120"/>
     </elements>
 </model>

@@ -9,7 +9,7 @@
 #import "GTDRootTableViewController.h"
 #import "GTDMasterViewController.h"
 #import "GTDActionsTableViewController.h"
-#import "GTDPrioritiesTableViewController.h"
+#import "GTDStartTimesTableViewController.h"
 
 @interface GTDRootTableViewController ()
 
@@ -23,7 +23,7 @@
 {
     if (!_menuOptions)
     {
-        _menuOptions = [NSArray arrayWithObjects:@"Inbox", @"Projects", @"Contexts", @"Contacts", @"Tags", @"Priorities", @"All Actions", nil];
+        _menuOptions = [NSArray arrayWithObjects:@"Inbox", @"Projects", @"Contexts", @"Contacts", @"Tags", @"Start Times", @"All Actions", nil];
     }
     return _menuOptions;
 }
@@ -173,12 +173,12 @@
         {
             GTDActionsTableViewController *actionsVC = (GTDActionsTableViewController *)[segue destinationViewController];
             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Action"];
-            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"startTime" ascending:YES];
             [fetchRequest setSortDescriptors:@[sortDescriptor]];
             
             NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                        managedObjectContext:moc
-                                                                                                         sectionNameKeyPath:nil
+                                                                                                         sectionNameKeyPath:@"startTime"
                                                                                                                   cacheName:@"All Actions"];
             fetchedResultsController.delegate = actionsVC;
             actionsVC.fetchedResultsController = fetchedResultsController;

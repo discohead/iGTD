@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GTDPrioritiesTableViewController : UITableViewController
+@interface GTDStartTimesTableViewController : UITableViewController
 
 @end

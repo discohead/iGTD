@@ -7,12 +7,25 @@
 //
 
 #import "GTDActionsTableViewController.h"
+#import "Action.h"
 
 @interface GTDActionsTableViewController ()
+
+@property (strong, nonatomic) NSArray *startTimes;
 
 @end
 
 @implementation GTDActionsTableViewController
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        _startTimes = @[@"Inbox", @"Today", @"Next", @"Tomorrow", @"Scheduled", @"Someday", @"Waiting"];
+    }
+    return self;
+}
 
 #pragma mark - Table view data source
 
@@ -35,6 +48,13 @@
     // Configure the cell...
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+    NSString *title = self.startTimes[[action.startTime integerValue]];
+    return title;
 }
 
 #pragma mark - Fetched results controller
@@ -93,6 +113,11 @@
 {
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [object description];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 @end

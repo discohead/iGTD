@@ -129,7 +129,7 @@
         [fetchRequest setEntity:entity];
         
         // Edit the sort key as appropriate.
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"startTime" ascending:YES];
         NSArray *sortDescriptors = @[sortDescriptor];
         
         [fetchRequest setSortDescriptors:sortDescriptors];
@@ -138,9 +138,10 @@
         
         [fetchRequest setPredicate:fetchPredicate];
         
-        NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:[object description]];
+        NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:@"startTime" cacheName:[object description]];
         projectsController.delegate = actionsVC;
         actionsVC.fetchedResultsController = projectsController;
+        actionsVC.parentEntity = object;
         actionsVC.navigationItem.title = [object description];
         
         NSError *error = nil;

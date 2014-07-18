@@ -112,10 +112,10 @@
             </objects>
             <point key="canvasLocation" x="-55" y="1136"/>
         </scene>
-        <!--Priorities Table View Controller - Priorities-->
+        <!--Start Times Table View Controller - Start Times-->
         <scene sceneID="ivZ-lx-MZp">
             <objects>
-                <tableViewController id="XX6-Nv-t3B" customClass="GTDPrioritiesTableViewController" sceneMemberID="viewController">
+                <tableViewController id="XX6-Nv-t3B" customClass="GTDStartTimesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="YPC-yI-Taa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -179,7 +179,7 @@
                             <outlet property="delegate" destination="XX6-Nv-t3B" id="bIU-ht-otF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Priorities" id="dce-j2-Mll"/>
+                    <navigationItem key="navigationItem" title="Start Times" id="dce-j2-Mll"/>
                     <connections>
                         <segue destination="aJv-Cb-Hzu" kind="push" identifier="Actions" id="SHr-M3-XTK"/>
                     </connections>
@@ -1070,7 +1070,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="r94-SU-cxp"/>
-        <segue reference="UGk-ls-VZb"/>
+        <segue reference="SHr-M3-XTK"/>
         <segue reference="ri2-31-yZ6"/>
         <segue reference="zvR-Sd-keq"/>
         <segue reference="pWJ-EO-gbP"/>

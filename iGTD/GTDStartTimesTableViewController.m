@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Jared McFarland. All rights reserved.
 //
 
-#import "GTDPrioritiesTableViewController.h"
+#import "GTDStartTimesTableViewController.h"
 #import "GTDActionsTableViewController.h"
 
-@interface GTDPrioritiesTableViewController ()
+@interface GTDStartTimesTableViewController ()
 
 @end
 
-@implementation GTDPrioritiesTableViewController
+@implementation GTDStartTimesTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -104,18 +104,18 @@
         
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        NSNumber *priority = @(indexPath.row + 1);
+        NSNumber *startTime = @(indexPath.row + 1);
         
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Action"];
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
         [fetchRequest setSortDescriptors:@[sortDescriptor]];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"priority == %@", priority];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"startTime == %@", startTime];
         [fetchRequest setPredicate:predicate];
         
         NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                    managedObjectContext:moc
-                                                                                                     sectionNameKeyPath:nil
+                                                                                                     sectionNameKeyPath:@"startTime"
                                                                                                               cacheName:cell.textLabel.text];
         
         if ([segue.destinationViewController isKindOfClass:[GTDActionsTableViewController class]])

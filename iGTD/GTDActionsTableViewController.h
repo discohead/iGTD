@@ -11,5 +11,6 @@
 @interface GTDActionsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic) id parentEntity;
 
 @end

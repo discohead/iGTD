@@ -24,9 +24,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    // _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+     //_addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     [MagicalRecord setupCoreDataStack];
-    // [self checkAddressBookAccess];
+     //[self checkAddressBookAccess];
     
     return YES;
 }
@@ -145,6 +145,7 @@
     a1.title = @"Learn Core Data";
     a1.textDescription = @"Learn core data better.";
     a1.priority = @(2);
+    a1.startTime = @(2);
     a1.deadline = [NSDate distantFuture];
     a1.scheduledDate = nil;
     a1.color = home.color;
@@ -159,6 +160,7 @@
     a2.title = @"Organize Filesystem";
     a2.textDescription = @"Clean up folders and re-organize.";
     a2.priority = @(3);
+    a2.startTime = @4;
     a2.deadline = [NSDate distantPast];
     a2.scheduledDate = nil;
     a2.color = office.color;
@@ -172,6 +174,7 @@
     a3.title = @"Refactor Code";
     a3.textDescription = @"Refactor code to make it better.";
     a3.priority = @(1);
+    a3.startTime = @5;
     a3.deadline = [NSDate date];
     a3.scheduledDate = [NSDate date];
     a3.color = home.color;
@@ -186,6 +189,7 @@
     a4.title = @"Call Deb Thomas";
     a4.textDescription = @"Call to find out when new sheet arrives.";
     a4.priority = @(0);
+    a4.startTime = @3;
     a4.deadline = [NSDate distantFuture];
     a4.scheduledDate = [NSDate date];
     a4.color = office.color;

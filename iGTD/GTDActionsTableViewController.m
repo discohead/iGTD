@@ -8,6 +8,10 @@
 
 #import "GTDActionsTableViewController.h"
 #import "Action.h"
+#import "Project.h"
+#import "Context.h"
+#import "Contact.h"
+#import "Tag.h"
 
 @interface GTDActionsTableViewController ()
 
@@ -31,13 +35,34 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+    if (self.parentEntity)
+    {
+        return [[self.fetchedResultsController sections] count] + 1;
+    } else
+    {
+        return [[self.fetchedResultsController sections] count];
+    }
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    if (self.parentEntity)
+    {
+        if (section == 0)
+        {
+            return 1;
+        } else
+        {
+            id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section - 1];
+            return [sectionInfo numberOfObjects];
+        }
+    } else
+    {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+        return [sectionInfo numberOfObjects];
+    }
+    
 }
 
 
@@ -52,9 +77,24 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
-    NSString *title = self.startTimes[[action.startTime integerValue]];
-    return title;
+    if (self.parentEntity)
+    {
+        if (section == 0)
+        {
+            return NSStringFromClass([self.parentEntity class]);
+        } else
+        {
+            Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section - 1]];
+            NSString *title = self.startTimes[[action.startTime integerValue]];
+            return title;
+        }
+    } else
+    {
+        Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+        NSString *title = self.startTimes[[action.startTime integerValue]];
+        return title;
+    }
+    
 }
 
 #pragma mark - Fetched results controller
@@ -67,6 +107,11 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
+    if (self.parentEntity)
+    {
+        sectionIndex = sectionIndex + 1;
+    }
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -82,6 +127,12 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
+    if (self.parentEntity)
+    {
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section + 1];
+        newIndexPath = [NSIndexPath indexPathForRow:newIndexPath.row inSection:newIndexPath.section + 1];
+    }
+    
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -111,13 +162,42 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [object description];
+    if (self.parentEntity)
+    {
+        if (indexPath.section == 0)
+        {
+            cell.textLabel.text = [self.parentEntity description];
+        } else
+        {
+            NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1]];
+            cell.textLabel.text = [object description];
+        }
+    } else
+    {
+        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        cell.textLabel.text = [object description];
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    if (self.parentEntity)
+    {
+        if (indexPath.section == 0)
+        {
+            NSString *parentClass = NSStringFromClass([self.parentEntity class]);
+            [self performSegueWithIdentifier:parentClass sender:self.parentEntity];
+        } else
+        {
+            Action *action = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1]];
+            [self performSegueWithIdentifier:@"Action" sender:action];
+        }
+    } else
+    {
+        Action *action = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        [self performSegueWithIdentifier:@"Action" sender:action];
+    }
 }
 
 @end

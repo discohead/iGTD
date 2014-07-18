@@ -7,6 +7,7 @@
 //
 
 #import "GTDActionsTableViewController.h"
+#import "GTDNewActionTableViewController.h"
 #import "Action.h"
 #import "Project.h"
 #import "Context.h"
@@ -197,6 +198,26 @@
     {
         Action *action = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [self performSegueWithIdentifier:@"Action" sender:action];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"newAction"])
+    {
+        if (self.parentEntity)
+        {
+            NSString *parentType = NSStringFromClass([self.parentEntity class]);
+            parentType = [parentType lowercaseString];
+            if ([parentType isEqualToString:@"contact"] || [parentType isEqualToString:@"tag"])
+            {
+                parentType = [parentType stringByAppendingString:@"s"];
+                self.parentEntity = [NSSet setWithObject:self.parentEntity];
+            }
+
+            GTDNewActionTableViewController *newActionVC = (GTDNewActionTableViewController *)segue.destinationViewController;
+            [newActionVC setValue:self.parentEntity forKey:parentType];
+        }
     }
 }
 

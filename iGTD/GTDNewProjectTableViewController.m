@@ -29,6 +29,14 @@
     return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.contextLabel.text = [self.context description];
+    [self formatStartTimeLabel];
+    [self formatContactsLabel];
+    [self formatTagsLabel];
+}
 
 #pragma mark - Table view data source
 
@@ -226,28 +234,38 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didChangeContacts:(NSSet *)contacts
+- (void)formatContactsLabel
 {
-    self.contacts = contacts;
     __block NSMutableArray *contactNames = [NSMutableArray array];
-    [contacts enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [self.contacts enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         Contact *contact = (Contact *)obj;
         [contactNames addObject:[contact firstName]];
     }];
     self.contactsLabel.text = [contactNames componentsJoinedByString:@", "];
+}
+
+- (void)didChangeContacts:(NSSet *)contacts
+{
+    self.contacts = contacts;
+    [self formatContactsLabel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didChangeTags:(NSSet *)tags
 {
     self.tags = tags;
+    [self formatTagsLabel];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)formatTagsLabel
+{
     __block NSMutableArray *tagTitles = [NSMutableArray array];
-    [tags enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [self.tags enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
         Tag *tag = (Tag *)obj;
         [tagTitles addObject:[tag title]];
     }];
     self.tagsLabel.text = [tagTitles componentsJoinedByString:@", "];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Helper Methods

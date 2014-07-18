@@ -171,6 +171,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="i5e-QU-BCz">
+                                        <rect key="frame" x="0.0" y="328" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="i5e-QU-BCz" id="PaX-6B-Xf0">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1069,11 +1077,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="r94-SU-cxp"/>
-        <segue reference="SHr-M3-XTK"/>
         <segue reference="ri2-31-yZ6"/>
-        <segue reference="zvR-Sd-keq"/>
-        <segue reference="pWJ-EO-gbP"/>
         <segue reference="0Ry-dq-sWs"/>
+        <segue reference="SHr-M3-XTK"/>
+        <segue reference="r94-SU-cxp"/>
+        <segue reference="n4F-c1-JsW"/>
+        <segue reference="EPW-DQ-xOe"/>
     </inferredMetricsTieBreakers>
 </document>

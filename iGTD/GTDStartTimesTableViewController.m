@@ -49,7 +49,7 @@
 {
 
     // Return the number of rows in the section.
-    return 6;
+    return 7;
 }
 
 
@@ -61,21 +61,24 @@
     switch (indexPath.row)
     {
         case 0:
-            cell.textLabel.text = @"Now";
+            cell.textLabel.text = @"Inbox";
             break;
         case 1:
-            cell.textLabel.text = @"Next";
+            cell.textLabel.text = @"Today";
             break;
         case 2:
-            cell.textLabel.text = @"Soon";
+            cell.textLabel.text = @"Next";
             break;
         case 3:
-            cell.textLabel.text = @"Later";
+            cell.textLabel.text = @"Tomorrow";
             break;
         case 4:
-            cell.textLabel.text = @"Someday";
+            cell.textLabel.text = @"Scheduled";
             break;
         case 5:
+            cell.textLabel.text = @"Someday";
+            break;
+        case 6:
             cell.textLabel.text = @"Waiting";
             break;
         default:
@@ -104,7 +107,7 @@
         
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        NSNumber *startTime = @(indexPath.row + 1);
+        NSNumber *startTime = @(indexPath.row);
         
         NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Action"];
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];

@@ -497,6 +497,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="accessoryView" destination="EJT-hB-bJP" id="zCP-GG-zor"/>
+                        <outlet property="allDaySwitch" destination="j4n-XX-kOh" id="myB-zB-v1N"/>
                         <outlet property="contactsLabel" destination="q5K-aX-Heh" id="omg-wV-wiJ"/>
                         <outlet property="contextLabel" destination="zgz-qK-5D3" id="nW6-Fk-ogR"/>
                         <outlet property="deadlineLabel" destination="hWw-LZ-ggM" id="iPq-8D-CWu"/>
@@ -695,10 +696,16 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="5lG-57-O8p" kind="push" identifier="Action" id="hk1-24-GGl"/>
+                        <segue destination="Z31-s6-hxS" kind="push" identifier="Project" id="etc-Bn-w1Q"/>
+                        <segue destination="Hg1-rl-YVq" kind="push" identifier="Context" id="GmA-vW-Adg"/>
+                        <segue destination="Hg1-rl-YVq" kind="push" identifier="Tag" id="REt-uH-CZ4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lAt-ZO-mru" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="1154"/>
+            <point key="canvasLocation" x="1562" y="1143"/>
         </scene>
         <!--Organization Picker Table View Controller - Context-->
         <scene sceneID="I5j-cs-yzT">
@@ -1077,11 +1084,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ri2-31-yZ6"/>
-        <segue reference="0Ry-dq-sWs"/>
         <segue reference="SHr-M3-XTK"/>
-        <segue reference="r94-SU-cxp"/>
+        <segue reference="etc-Bn-w1Q"/>
+        <segue reference="hk1-24-GGl"/>
+        <segue reference="REt-uH-CZ4"/>
+        <segue reference="bed-qu-xhm"/>
+        <segue reference="JUF-O3-xS7"/>
         <segue reference="n4F-c1-JsW"/>
-        <segue reference="EPW-DQ-xOe"/>
     </inferredMetricsTieBreakers>
 </document>

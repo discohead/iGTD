@@ -14,5 +14,4 @@
 @property (strong, nonatomic) Action *action;
 @property (strong, nonatomic) NSNumber *priority;
 
-
 @end

@@ -8,6 +8,7 @@
 
 #import "GTDActionsTableViewController.h"
 #import "GTDNewActionTableViewController.h"
+#import "GTDNewContextOrTagTableViewController.h"
 #import "Action.h"
 #import "Project.h"
 #import "Context.h"
@@ -30,6 +31,15 @@
         _startTimes = @[@"Inbox", @"Today", @"Next", @"Tomorrow", @"Scheduled", @"Someday", @"Waiting"];
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (self.parentEntity)
+    {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        self.navigationItem.title = [self.parentEntity description];
+    }
 }
 
 #pragma mark - Table view data source
@@ -218,6 +228,43 @@
             GTDNewActionTableViewController *newActionVC = (GTDNewActionTableViewController *)segue.destinationViewController;
             [newActionVC setValue:self.parentEntity forKey:parentType];
         }
+    } else if ([segue.identifier isEqualToString:@"Action"])
+    {
+        Action *action = (Action *)sender;
+        GTDNewActionTableViewController *editActionVC = (GTDNewActionTableViewController *)segue.destinationViewController;
+        editActionVC.action = action;
+        editActionVC.titleText = action.title;
+        editActionVC.descriptionText = action.textDescription;
+        editActionVC.priority = action.priority;
+        editActionVC.project = action.project;
+        editActionVC.context = action.context;
+        editActionVC.contacts = action.contacts;
+        editActionVC.tags = action.tags;
+        editActionVC.startTime = action.startTime;
+        editActionVC.scheduledDate = action.scheduledDate;
+        editActionVC.deadline = action.deadline;
+        editActionVC.isAllDay = [action.isAllDay boolValue];
+    } else if ([segue.identifier isEqualToString:@"Project"])
+    {
+        Project *project = (Project *)sender;
+        GTDNewProjectTableViewController *editProjectVC = (GTDNewProjectTableViewController *)segue.destinationViewController;
+        editProjectVC.project = project;
+        editProjectVC.titleText = project.title;
+        editProjectVC.descriptionText = project.textDescription;
+        editProjectVC.startTime = project.startTime;
+        editProjectVC.scheduledDate = project.scheduledDate;
+        editProjectVC.deadline = project.deadline;
+        editProjectVC.context = project.context;
+        editProjectVC.contacts = project.contacts;
+        editProjectVC.tags = project.tags;
+    } else if ([segue.identifier isEqualToString:@"Context"])
+    {
+        Context *context = (Context *)sender;
+        GTDNewContextOrTagTableViewController *editContextVC = (GTDNewContextOrTagTableViewController *)segue.destinationViewController;
+        editContextVC.context = context;
+        editContextVC.titleText = context.title;
+        editContextVC.isContext = YES;
+        editContextVC.navigationItem.title = @"Edit Context";
     }
 }
 

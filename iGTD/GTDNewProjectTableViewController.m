@@ -14,6 +14,15 @@
 
 @implementation GTDNewProjectTableViewController
 
+- (Project *)project
+{
+    if (!_project)
+    {
+        _project = [Project createEntity];
+    }
+    return _project;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -36,6 +45,9 @@
     [self formatStartTimeLabel];
     [self formatContactsLabel];
     [self formatTagsLabel];
+    self.titleTextField.text = self.titleText;
+    self.descriptionTextField.text = self.descriptionText;
+    self.deadlineLabel.text = [self dateStringFromDate:self.deadline];
 }
 
 #pragma mark - Table view data source
@@ -336,15 +348,14 @@
 }
 - (IBAction)saveBarButtonItemPressed:(id)sender
 {
-    Project *project = [Project createEntity];
-    project.title = self.titleTextField.text;
-    project.textDescription = self.descriptionTextField.text;
-    project.startTime = self.startTime;
-    project.scheduledDate = self.scheduledDate;
-    project.deadline = self.deadline;
-    project.context = self.context;
-    project.contacts = self.contacts;
-    project.tags = self.tags;
+    self.project.title = self.titleTextField.text;
+    self.project.textDescription = self.descriptionTextField.text;
+    self.project.startTime = self.startTime;
+    self.project.scheduledDate = self.scheduledDate;
+    self.project.deadline = self.deadline;
+    self.project.context = self.context;
+    self.project.contacts = self.contacts;
+    self.project.tags = self.tags;
     
     NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
     

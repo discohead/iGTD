@@ -171,24 +171,27 @@
 // Dismisses the new-person view controller.
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonViewController didCompleteWithNewPerson:(ABRecordRef)person
 {
-    Contact *newContact = [Contact createEntity];
-    newContact.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
-    newContact.firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-    newContact.lastName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+    if (person)
+    {
+        Contact *newContact = [Contact createEntity];
+        newContact.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
+        newContact.firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
+        newContact.lastName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+        
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        
+        [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+            if (!success)
+            {
+                NSLog(@"Error saving New Contact: %@", [error localizedDescription]);
+            } else
+            {
+                NSLog(@"New Contact Saved!");
+            }
+        }];
+    }
     
-    NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
-    
-    [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        if (!success)
-        {
-            NSLog(@"Error saving New Contact: %@", [error localizedDescription]);
-        } else
-        {
-            NSLog(@"New Contact Saved!");
-        }
-    }];
-    
-	[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)checkAddressBookAccess

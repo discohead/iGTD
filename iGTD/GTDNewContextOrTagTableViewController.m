@@ -16,17 +16,38 @@
 
 @implementation GTDNewContextOrTagTableViewController
 
+- (Context *)context
+{
+    if (!_context)
+    {
+        _context = [Context createEntity];
+    }
+    return _context;
+}
+
+- (Tag *)tag
+{
+    if(!_tag)
+    {
+        _tag = [Tag createEntity];
+    }
+    return _tag;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.titleTextField.text = self.titleText;
+}
 
 - (IBAction)saveBarButtonItemPressed:(id)sender
 {
     if (self.isContext)
     {
-        Context *context = [Context createEntity];
-        context.title = self.titleTextField.text;
+        self.context.title = self.titleTextField.text;
     } else
     {
-        Tag *tag = [Tag createEntity];
-        tag.title = self.titleTextField.text;
+        self.tag.title = self.titleTextField.text;
     }
     
     

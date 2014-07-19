@@ -13,15 +13,35 @@
 @property (weak, nonatomic) IBOutlet UIStepper *priorityStepper;
 @property (weak, nonatomic) IBOutlet UILabel *priorityLabel;
 @property (weak, nonatomic) IBOutlet UILabel *projectLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *allDaySwitch;
 @property (strong, nonatomic) NSArray *priorityStrings;
 
 @end
 
 @implementation GTDNewActionTableViewController
 
+- (Action *)action
+{
+    if (!_action)
+    {
+        _action = [Action createEntity];
+    }
+    return _action;
+}
+
+- (NSNumber *)priority
+{
+    if (_priority == nil)
+    {
+        _priority = @0;
+    }
+    return _priority;
+}
+
 - (IBAction)isAllDaySwitch:(UISwitch *)sender
 {
     self.isAllDay = !self.isAllDay;
+    
 }
 
 - (IBAction)priorityStepperValueChanged:(UIStepper *)sender
@@ -37,7 +57,6 @@
     {
         // Custom initialization
         _priorityStrings = @[@"None", @"Low", @"Medium", @"High"];
-        _priority = @0;
         self.organizationStrings = @[@"Context", @"Project", @"Contacts", @"Tags", @"Color"];
     }
     return self;
@@ -47,6 +66,10 @@
 {
     [super viewDidLoad];
     self.projectLabel.text = [self.project description];
+    self.priorityStepper.value = [self.priority doubleValue];
+    self.priorityLabel.text = self.priorityStrings[self.priority.integerValue];
+    self.allDaySwitch.on = self.isAllDay;
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,27 +106,28 @@
 
 - (IBAction)saveBarButtonItemPressed:(id)sender
 {
-    Action *action = [Action createEntity];
-    action.title = self.titleTextField.text;
-    action.textDescription = self.descriptionTextField.text;
-    action.priority = self.priority;
-    action.startTime = self.startTime;
-    action.scheduledDate = self.scheduledDate;
-    action.deadline = self.deadline;
-    action.context = self.context;
-    action.project = self.project;
-    action.contacts = self.contacts;
-    action.tags = self.tags;
+
+    self.action.title = self.titleTextField.text;
+    self.action.textDescription = self.descriptionTextField.text;
+    self.action.priority = self.priority;
+    self.action.isAllDay = @(self.isAllDay);
+    self.action.startTime = self.startTime;
+    self.action.scheduledDate = self.scheduledDate;
+    self.action.deadline = self.deadline;
+    self.action.context = self.context;
+    self.action.project = self.project;
+    self.action.contacts = self.contacts;
+    self.action.tags = self.tags;
     
     NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
     
     [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         if (!success)
         {
-            NSLog(@"Error saving New Action: %@", [error localizedDescription]);
+            NSLog(@"Error saving Action: %@", [error localizedDescription]);
         } else
         {
-            NSLog(@"New Action Saved!");
+            NSLog(@"Action Saved!");
         }
     }];
     [self.navigationController popViewControllerAnimated:YES];

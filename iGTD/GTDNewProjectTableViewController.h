@@ -27,6 +27,8 @@
 @property (strong, nonatomic) NSNumber *startTime;
 @property (strong, nonatomic) NSDate *deadline;
 @property (strong, nonatomic) NSDate *scheduledDate;
+@property (strong, nonatomic) NSString *titleText;
+@property (strong, nonatomic) NSString *descriptionText;
 @property (nonatomic) BOOL isAllDay;
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;

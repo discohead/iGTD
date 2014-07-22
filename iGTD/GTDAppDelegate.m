@@ -24,9 +24,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-     //_addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+     _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     [MagicalRecord setupCoreDataStack];
-     //[self checkAddressBookAccess];
+    [self checkAddressBookAccess];
     
     return YES;
 }
@@ -38,7 +38,7 @@
     {
             // Update our UI if the user has granted access to their Contacts
         case  kABAuthorizationStatusAuthorized:
-            [self createTestData];
+            // [self createTestData];
             break;
             // Prompt the user for access to Contacts if there is no definitive answer
         case  kABAuthorizationStatusNotDetermined :
@@ -72,7 +72,7 @@
                                                  {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
                                                          NSLog(@"AddressBook Access Granted!");
-                                                         [weakSelf createTestData];
+                                                         // [weakSelf createTestData];
                                                          
                                                      });
 

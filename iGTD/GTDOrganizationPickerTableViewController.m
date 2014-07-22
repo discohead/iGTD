@@ -54,7 +54,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects] + 1;
+    return [sectionInfo numberOfObjects] + 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -63,9 +63,13 @@
     
     if (indexPath.row == 0)
     {
+        cell.textLabel.text = @"New Tag";
+        cell.textLabel.textColor = [UIColor lightTextColor];
+    } else if (indexPath.row == 1)
+    {
         cell.textLabel.text = @"Unset";
         return cell;
-    } else
+    }
     {
         [self configureCell:cell atIndexPath:indexPath];
         return cell;
@@ -77,6 +81,15 @@
 {
     if (indexPath.row == 0)
     {
+        if ([self.entityName isEqualToString:@"Contact"])
+        {
+            [self createNewContact];
+        } else if ([self.entityName isEqualToString:@"Tag"])
+        {
+            [self createNewTag];
+        }
+    } else if (indexPath.row == 1)
+    {
         [self unset];
     } else
     {
@@ -85,7 +98,7 @@
             UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         }
-        indexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row - 2 inSection:indexPath.section];
         id obj = [self.fetchedResultsController objectAtIndexPath:indexPath];
         [self setNewObject:obj];
     }
@@ -99,7 +112,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    indexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+    indexPath = [NSIndexPath indexPathForRow:indexPath.row - 2 inSection:indexPath.section];
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [object description];
 }
@@ -146,7 +159,7 @@
     for (NSIndexPath *indexPath in indexPaths)
     {
         // Adjust row by -1 to account for "Unset" row
-        NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        NSIndexPath *adjustedIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 2 inSection:indexPath.section];
         NSManagedObject *obj = [self.fetchedResultsController objectAtIndexPath:adjustedIndexPath];
         [setArray addObject:obj];
     }
@@ -158,6 +171,16 @@
     {
         [self.delegate didChangeTags:set];
     }
+    
+}
+
+- (void)createNewContact
+{
+    
+}
+
+- (void)createNewTag
+{
     
 }
 

@@ -6,16 +6,19 @@
 //  Copyright (c) 2014 Jared McFarland. All rights reserved.
 //
 
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "GTDActionsTableViewController.h"
 #import "GTDNewActionTableViewController.h"
 #import "GTDNewContextOrTagTableViewController.h"
+#import "GTDAppDelegate.h"
 #import "Action.h"
 #import "Project.h"
 #import "Context.h"
 #import "Contact.h"
 #import "Tag.h"
 
-@interface GTDActionsTableViewController ()
+@interface GTDActionsTableViewController () <ABPersonViewControllerDelegate>
 
 @property (strong, nonatomic) NSArray *startTimes;
 
@@ -198,7 +201,20 @@
         if (indexPath.section == 0)
         {
             NSString *parentClass = NSStringFromClass([self.parentEntity class]);
-            [self performSegueWithIdentifier:parentClass sender:self.parentEntity];
+            if ([parentClass isEqualToString:@"Contact"])
+            {
+                GTDAppDelegate *appDelegate = (GTDAppDelegate *)[[UIApplication sharedApplication] delegate];
+                Contact *contact = (Contact *)self.parentEntity;
+                ABRecordRef person = ABAddressBookGetPersonWithRecordID(appDelegate.addressBook, [contact.abRecordID intValue]);
+                ABPersonViewController *picker = [[ABPersonViewController alloc] init];
+                picker.personViewDelegate = self;
+                picker.displayedPerson = person;
+                picker.allowsEditing = YES;
+                [self.navigationController pushViewController:picker animated:YES];
+            } else
+            {
+                [self performSegueWithIdentifier:parentClass sender:self.parentEntity];
+            }
         } else
         {
             Action *action = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1]];
@@ -266,6 +282,16 @@
         editContextVC.isContext = YES;
         editContextVC.navigationItem.title = @"Edit Context";
     }
+}
+
+#pragma mark - Person View Controller Delegate
+
+- (BOOL)personViewController:(ABPersonViewController *)personViewController
+shouldPerformDefaultActionForPerson:(ABRecordRef)person
+                    property:(ABPropertyID)property
+                  identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
 }
 
 @end

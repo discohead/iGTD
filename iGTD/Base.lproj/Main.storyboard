@@ -106,6 +106,7 @@
                         <segue destination="pGg-6v-bdr" kind="push" identifier="Entity Segue" id="504-Qc-qbb"/>
                         <segue destination="XX6-Nv-t3B" kind="push" identifier="Priorities" id="Jcv-Ve-Khd"/>
                         <segue destination="aJv-Cb-Hzu" kind="push" identifier="All Actions" id="gfT-dK-Hyh"/>
+                        <segue destination="aJv-Cb-Hzu" kind="push" identifier="Inbox" id="xDI-H3-qre"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bfr-AT-1e0" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1089,8 +1090,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="pWJ-EO-gbP"/>
         <segue reference="etc-Bn-w1Q"/>
-        <segue reference="SHr-M3-XTK"/>
-        <segue reference="hk1-24-GGl"/>
+        <segue reference="xDI-H3-qre"/>
+        <segue reference="8Y6-Kd-3Ag"/>
         <segue reference="zvR-Sd-keq"/>
         <segue reference="0Ry-dq-sWs"/>
         <segue reference="8Rz-Br-HUi"/>

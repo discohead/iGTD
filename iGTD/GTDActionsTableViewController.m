@@ -281,6 +281,13 @@
         editContextVC.titleText = context.title;
         editContextVC.isContext = YES;
         editContextVC.navigationItem.title = @"Edit Context";
+    } else if ([segue.identifier isEqualToString:@"Tag"])
+    {
+        Tag *tag = (Tag *)sender;
+        GTDNewContextOrTagTableViewController *editTagVC = (GTDNewContextOrTagTableViewController *)segue.destinationViewController;
+        editTagVC.tag = tag;
+        editTagVC.titleText = tag.title;
+        editTagVC.navigationItem.title = @"Edit Tag";
     }
 }
 

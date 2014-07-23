@@ -81,6 +81,9 @@
 {
     switch (indexPath.row)
     {
+        case 0:
+            [self performSegueWithIdentifier:@"Inbox" sender:[tableView cellForRowAtIndexPath:indexPath]];
+            break;
         case 1:
         case 2:
         case 3:
@@ -191,6 +194,34 @@
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
+        }
+    } else if ([segue.identifier isEqualToString:@"Inbox"])
+    {
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        
+        GTDActionsTableViewController *inboxVC = (GTDActionsTableViewController *)segue.destinationViewController;
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Action"];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+        [fetchRequest setSortDescriptors:@[sortDescriptor]];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"startTime == %@", @0];
+        [fetchRequest setPredicate:predicate];
+        
+        NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                   managedObjectContext:moc
+                                                                                                     sectionNameKeyPath:nil
+                                                                                                              cacheName:@"Inbox"];
+        
+        fetchedResultsController.delegate = inboxVC;
+        inboxVC.fetchedResultsController = fetchedResultsController;
+        inboxVC.navigationItem.title = @"Inbox";
+        
+        NSError *error = nil;
+        if (![inboxVC.fetchedResultsController performFetch:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
         }
     }
     

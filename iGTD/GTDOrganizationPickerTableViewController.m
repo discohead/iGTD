@@ -9,11 +9,12 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "GTDOrganizationPickerTableViewController.h"
+#import "GTDNewContextOrTagTableViewController.h"
 #import "Context.h"
 #import "Contact.h"
 #import "Project.h"
 
-@interface GTDOrganizationPickerTableViewController () <ABPeoplePickerNavigationControllerDelegate>
+@interface GTDOrganizationPickerTableViewController () <ABPeoplePickerNavigationControllerDelegate, GTDNewContextOrTagTableViewControllerDelegate>
 
 @end
 
@@ -102,7 +103,7 @@
             [self showPeoplePickerController];
         } else if ([self.entityName isEqualToString:@"Tag"])
         {
-            [self createNewTag];
+            [self performSegueWithIdentifier:@"newTag" sender:self.entityName];
         } else
         {
             [self unset];
@@ -293,11 +294,6 @@
     
 }
 
-- (void)createNewTag
-{
-    
-}
-
 -(void)showPeoplePickerController
 {
 	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
@@ -327,6 +323,28 @@
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
 {
 	[self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"newTag"])
+    {
+        GTDNewContextOrTagTableViewController *newTagVC = (GTDNewContextOrTagTableViewController *)segue.destinationViewController;
+        newTagVC.delegate = self;
+    }
+}
+
+#pragma mark - GTDNewContextOrTagTableViewController Delegate
+
+- (void)didSaveNewContextOrTag:(NSManagedObject *)contextOrTag
+{
+    NSIndexPath *indexPath = [self.fetchedResultsController indexPathForObject:contextOrTag];
+    indexPath = [NSIndexPath indexPathForRow:indexPath.row + 2 inSection:indexPath.section];
+    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
 }
 
 @end

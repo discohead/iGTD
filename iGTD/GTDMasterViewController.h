@@ -11,7 +11,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <CoreData/CoreData.h>
 
-@interface GTDMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate, ABNewPersonViewControllerDelegate>
+@interface GTDMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

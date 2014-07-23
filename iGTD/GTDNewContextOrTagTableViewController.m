@@ -60,6 +60,14 @@
         } else
         {
             NSLog(@"New Context or Tag Saved!");
+            if (self.isContext)
+            {
+                [self.delegate didSaveNewContextOrTag:self.context];
+            } else
+            {
+                [self.delegate didSaveNewContextOrTag:self.tag];
+            }
+            
         }
     }];
     [self.navigationController popViewControllerAnimated:YES];

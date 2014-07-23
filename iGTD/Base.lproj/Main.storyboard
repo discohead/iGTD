@@ -738,6 +738,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Hg1-rl-YVq" kind="push" identifier="newTag" id="8Rz-Br-HUi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Lo-JD-72a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1088,8 +1091,8 @@
         <segue reference="etc-Bn-w1Q"/>
         <segue reference="SHr-M3-XTK"/>
         <segue reference="hk1-24-GGl"/>
-        <segue reference="REt-uH-CZ4"/>
         <segue reference="zvR-Sd-keq"/>
         <segue reference="0Ry-dq-sWs"/>
+        <segue reference="8Rz-Br-HUi"/>
     </inferredMetricsTieBreakers>
 </document>

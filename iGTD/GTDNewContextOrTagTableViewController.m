@@ -10,7 +10,7 @@
 #import "Context.h"
 #import "Tag.h"
 
-@interface GTDNewContextOrTagTableViewController ()
+@interface GTDNewContextOrTagTableViewController () <UITextFieldDelegate>
 
 @end
 
@@ -38,6 +38,7 @@
 {
     [super viewDidLoad];
     self.titleTextField.text = self.titleText;
+    self.titleTextField.delegate = self;
 }
 
 - (IBAction)saveBarButtonItemPressed:(id)sender
@@ -71,6 +72,30 @@
         }
     }];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField.inputAccessoryView == nil)
+    {
+        textField.inputAccessoryView = self.accessoryView;
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (IBAction)dismissKeyboardButtonPressed:(UIButton *)sender
+{
+    [self.titleTextField resignFirstResponder];
 }
 
 @end

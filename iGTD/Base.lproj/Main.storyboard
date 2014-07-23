@@ -847,10 +847,35 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="accessoryView" destination="0lj-P4-SS4" id="Cjb-Em-7OB"/>
                         <outlet property="titleTextField" destination="PGX-kh-FuJ" id="fp0-Dw-OII"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ma-ob-tUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="0lj-P4-SS4" userLabel="Accessory View">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbD-L5-Bs7" userLabel="Button - Dismiss Keyboard">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                            <fontDescription key="fontDescription" name="ArialUnicodeMS" family="Arial Unicode MS" pointSize="24"/>
+                            <state key="normal" title="⌄"/>
+                            <connections>
+                                <action selector="dismissKeyboardButtonPressed:" destination="Hg1-rl-YVq" eventType="touchUpInside" id="8eu-nY-Psh"/>
+                                <action selector="dismissKeyboardButtonPressed:" destination="5lG-57-O8p" eventType="touchUpInside" id="N3r-tQ-3wq"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="centerX" secondItem="EbD-L5-Bs7" secondAttribute="centerX" id="2wQ-Zf-NoE"/>
+                        <constraint firstItem="EbD-L5-Bs7" firstAttribute="top" secondItem="0lj-P4-SS4" secondAttribute="top" id="8zJ-Zf-cLc"/>
+                        <constraint firstItem="EbD-L5-Bs7" firstAttribute="leading" secondItem="0lj-P4-SS4" secondAttribute="leading" id="96u-hU-Nnh"/>
+                        <constraint firstAttribute="bottom" secondItem="EbD-L5-Bs7" secondAttribute="bottom" id="XJn-0e-T75"/>
+                        <constraint firstAttribute="centerY" secondItem="EbD-L5-Bs7" secondAttribute="centerY" id="fzk-HT-xNy"/>
+                        <constraint firstAttribute="trailing" secondItem="EbD-L5-Bs7" secondAttribute="trailing" id="h3V-3s-xzg"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="1536" y="-892"/>
         </scene>

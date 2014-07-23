@@ -27,4 +27,6 @@
 @property (strong, nonatomic) NSString *titleText;
 @property (weak, nonatomic) id <GTDNewContextOrTagTableViewControllerDelegate> delegate;
 
+@property (strong, nonatomic) IBOutlet UIView *accessoryView;
+
 @end

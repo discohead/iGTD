@@ -1084,12 +1084,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SHr-M3-XTK"/>
+        <segue reference="pWJ-EO-gbP"/>
         <segue reference="etc-Bn-w1Q"/>
+        <segue reference="SHr-M3-XTK"/>
         <segue reference="hk1-24-GGl"/>
         <segue reference="REt-uH-CZ4"/>
-        <segue reference="bed-qu-xhm"/>
-        <segue reference="JUF-O3-xS7"/>
-        <segue reference="n4F-c1-JsW"/>
+        <segue reference="zvR-Sd-keq"/>
+        <segue reference="0Ry-dq-sWs"/>
     </inferredMetricsTieBreakers>
 </document>

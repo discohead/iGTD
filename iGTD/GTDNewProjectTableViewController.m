@@ -14,15 +14,6 @@
 
 @implementation GTDNewProjectTableViewController
 
-- (Project *)project
-{
-    if (!_project)
-    {
-        _project = [Project createEntity];
-    }
-    return _project;
-}
-
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -348,6 +339,11 @@
 }
 - (IBAction)saveBarButtonItemPressed:(id)sender
 {
+    if (!self.project)
+    {
+        self.project = [Project createEntity];
+    }
+    
     self.project.title = self.titleTextField.text;
     self.project.textDescription = self.descriptionTextField.text;
     self.project.startTime = self.startTime;

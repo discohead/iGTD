@@ -122,7 +122,7 @@
 		7F2BE90E194525DA00D51335 /* ActionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSpec.m; sourceTree = "<group>"; };
 		7F3697A11971EE6D002DC118 /* GTDNewProjectTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDNewProjectTableViewController.h; sourceTree = "<group>"; };
 		7F3697A21971EE6D002DC118 /* GTDNewProjectTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDNewProjectTableViewController.m; sourceTree = "<group>"; };
-		7F4F4B9E1961E1AB00677874 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		7F4F4B9E1961E1AB00677874 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7F74FCF91950AD6900A0852F /* ProjectSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSpec.m; sourceTree = "<group>"; };
 		7F74FCFB1950C14300A0852F /* GTDRootTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDRootTableViewController.h; sourceTree = "<group>"; };
 		7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDRootTableViewController.m; sourceTree = "<group>"; };

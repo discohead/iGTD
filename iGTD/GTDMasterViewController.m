@@ -15,7 +15,7 @@
 #import "Tag.h"
 #import "Contact.h"
 
-@interface GTDMasterViewController ()
+@interface GTDMasterViewController () <ABPeoplePickerNavigationControllerDelegate>
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
@@ -52,7 +52,7 @@
     NSString *entityName = [[[self.fetchedResultsController fetchRequest] entity] name];
     if ([entityName isEqualToString:@"Contact"])
     {
-        [self showNewPersonViewController];
+        [self showPeoplePickerController];
     } else
     {
         [self performSegueWithIdentifier:entityName sender:sender];
@@ -159,40 +159,39 @@
     }
 }
 
--(void)showNewPersonViewController
+-(void)showPeoplePickerController
 {
-	ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
-	picker.newPersonViewDelegate = self;
+	ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+    picker.peoplePickerDelegate = self;
 	
-    [self.navigationController pushViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
-#pragma mark ABNewPersonViewControllerDelegate methods
-// Dismisses the new-person view controller.
-- (void)newPersonViewController:(ABNewPersonViewController *)newPersonViewController didCompleteWithNewPerson:(ABRecordRef)person
+#pragma mark ABPeoplePickerNavigationControllerDelegate methods
+// Displays the information of a selected person
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
-    if (person)
-    {
-        Contact *newContact = [Contact createEntity];
-        newContact.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
-        newContact.firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
-        newContact.lastName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
-        
-        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
-        
-        [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-            if (!success)
-            {
-                NSLog(@"Error saving New Contact: %@", [error localizedDescription]);
-            } else
-            {
-                NSLog(@"New Contact Saved!");
-            }
-        }];
-    }
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    Contact *newContact = [Contact createEntity];
+    newContact.abRecordID = [NSNumber numberWithInt:ABRecordGetRecordID(person)];
+    newContact.firstName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonFirstNameProperty));
+    newContact.lastName = CFBridgingRelease(ABRecordCopyValue(person, kABPersonLastNameProperty));
+    [self dismissViewControllerAnimated:YES completion:NULL];
+	return NO;
 }
+
+// Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+								property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+	return NO;
+}
+
+// Dismisses the people picker and shows the application when users tap Cancel.
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
+{
+	[self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 
 -(void)checkAddressBookAccess
 {

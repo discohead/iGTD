@@ -40,7 +40,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,6 +74,23 @@
     cell.textLabel.text = self.startTimes[indexPath.row];
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.isProject)
+    {
+        if (indexPath.row == 0 || indexPath.row == 6)
+        {
+            return 0;
+        } else
+        {
+            return tableView.rowHeight;
+        }
+    } else
+    {
+        return tableView.rowHeight;
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

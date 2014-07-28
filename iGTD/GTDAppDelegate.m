@@ -38,7 +38,7 @@
     {
             // Update our UI if the user has granted access to their Contacts
         case  kABAuthorizationStatusAuthorized:
-            // [self createTestData];
+             // [self createTestData];
             break;
             // Prompt the user for access to Contacts if there is no definitive answer
         case  kABAuthorizationStatusNotDetermined :
@@ -72,7 +72,7 @@
                                                  {
                                                      dispatch_async(dispatch_get_main_queue(), ^{
                                                          NSLog(@"AddressBook Access Granted!");
-                                                       // [weakSelf createTestData];
+                                                        // [weakSelf createTestData];
                                                          
                                                      });
 
@@ -133,13 +133,13 @@
     education.title = @"Education";
     education.color = [UIColor yellowColor];
     [iosProject addTagsObject:education];
-    //[mom addTagsObject:education];
+    [mom addTagsObject:education];
     
     Tag *fun = [Tag createEntity];
     fun.title = @"Fun";
     fun.color = [UIColor brownColor];
     [workProject addTagsObject:fun];
-    //[natalie addTagsObject:fun];
+    [natalie addTagsObject:fun];
     
     Action *a1 = [Action createEntity];
     a1.title = @"Learn Core Data";
@@ -153,8 +153,8 @@
     a1.context = home;
     [a1 addTagsObject:education];
     [iosProject addActionsObject:a1];
-    //[a1 addContactsObject:natalie];
-    //[a1 addContactsObject:mom];
+    [a1 addContactsObject:natalie];
+    [a1 addContactsObject:mom];
     
     Action *a2 = [Action createEntity];
     a2.title = @"Organize Filesystem";
@@ -168,7 +168,7 @@
     a2.context = office;
     [a2 addTagsObject:fun];
     [workProject addActionsObject:a2];
-    //[a2 addContactsObject:natalie];
+    [a2 addContactsObject:natalie];
     
     Action *a3 = [Action createEntity];
     a3.title = @"Refactor Code";
@@ -183,7 +183,7 @@
     [a3 addTagsObject:education];
     [a3 addTagsObject:fun];
     [iosProject addActionsObject:a3];
-    //[a3 addContactsObject:mom];
+    [a3 addContactsObject:mom];
     
     Action *a4 = [Action createEntity];
     a4.title = @"Call Deb Thomas";
@@ -197,7 +197,7 @@
     a4.context = office;
     [a4 addTagsObject:fun];
     [workProject addActionsObject:a4];
-    //[a4 addContactsObject:mom];
+    [a4 addContactsObject:mom];
     
     NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
     

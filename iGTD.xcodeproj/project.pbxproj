@@ -55,6 +55,8 @@
 		7F74FCFD1950C14300A0852F /* GTDRootTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */; };
 		7F74FD001950FC6200A0852F /* GTDActionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */; };
 		7F9594E019523AF900B8D212 /* GTDStartTimesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F9594DF19523AF900B8D212 /* GTDStartTimesTableViewController.m */; };
+		7FB44D791985B1980007D2C4 /* GTDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FB44D781985B1980007D2C4 /* GTDTableViewCell.m */; };
+		7FB44D7C1985B2D60007D2C4 /* GTDCheckBoxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FB44D7B1985B2D60007D2C4 /* GTDCheckBoxView.m */; };
 		7FE0D2BB1958FA2800074259 /* GTDNewActionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */; };
 		7FE0D2BE1959207400074259 /* GTDStartTimeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */; };
 		7FE0D2C1195A4D7B00074259 /* GTDCalendarPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */; };
@@ -130,6 +132,10 @@
 		7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDActionsTableViewController.m; sourceTree = "<group>"; };
 		7F9594DE19523AF900B8D212 /* GTDStartTimesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDStartTimesTableViewController.h; sourceTree = "<group>"; };
 		7F9594DF19523AF900B8D212 /* GTDStartTimesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDStartTimesTableViewController.m; sourceTree = "<group>"; };
+		7FB44D771985B1980007D2C4 /* GTDTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDTableViewCell.h; sourceTree = "<group>"; };
+		7FB44D781985B1980007D2C4 /* GTDTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDTableViewCell.m; sourceTree = "<group>"; };
+		7FB44D7A1985B2D60007D2C4 /* GTDCheckBoxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDCheckBoxView.h; sourceTree = "<group>"; };
+		7FB44D7B1985B2D60007D2C4 /* GTDCheckBoxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDCheckBoxView.m; sourceTree = "<group>"; };
 		7FE0D2B91958FA2800074259 /* GTDNewActionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDNewActionTableViewController.h; sourceTree = "<group>"; };
 		7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTDNewActionTableViewController.m; sourceTree = "<group>"; };
 		7FE0D2BC1959207400074259 /* GTDStartTimeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTDStartTimeTableViewController.h; sourceTree = "<group>"; };
@@ -221,28 +227,32 @@
 			children = (
 				7F2BE8EF1945242600D51335 /* Model */,
 				7F2BE8C0194519C100D51335 /* Main.storyboard */,
-				7FFF1B561978248C00A9F489 /* GTDNewContextOrTagTableViewController.h */,
-				7FFF1B571978248C00A9F489 /* GTDNewContextOrTagTableViewController.m */,
-				7F3697A11971EE6D002DC118 /* GTDNewProjectTableViewController.h */,
-				7F3697A21971EE6D002DC118 /* GTDNewProjectTableViewController.m */,
-				7FE0D2C5195BBA4A00074259 /* GTDOrganizationPickerTableViewController.h */,
-				7FE0D2C6195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m */,
 				7F74FCFB1950C14300A0852F /* GTDRootTableViewController.h */,
 				7F74FCFC1950C14300A0852F /* GTDRootTableViewController.m */,
-				7FE0D2B91958FA2800074259 /* GTDNewActionTableViewController.h */,
-				7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */,
-				7FE0D2BC1959207400074259 /* GTDStartTimeTableViewController.h */,
-				7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */,
-				7FE0D2C2195B5D7600074259 /* GTDkeyboardAccessoryView.h */,
-				7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */,
-				7FE0D2BF195A4D7B00074259 /* GTDCalendarPickerViewController.h */,
-				7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */,
 				7F2BE8C6194519C100D51335 /* GTDMasterViewController.h */,
 				7F2BE8C7194519C100D51335 /* GTDMasterViewController.m */,
 				7F9594DE19523AF900B8D212 /* GTDStartTimesTableViewController.h */,
 				7F9594DF19523AF900B8D212 /* GTDStartTimesTableViewController.m */,
 				7F74FCFE1950FC6200A0852F /* GTDActionsTableViewController.h */,
 				7F74FCFF1950FC6200A0852F /* GTDActionsTableViewController.m */,
+				7FB44D771985B1980007D2C4 /* GTDTableViewCell.h */,
+				7FB44D781985B1980007D2C4 /* GTDTableViewCell.m */,
+				7FB44D7A1985B2D60007D2C4 /* GTDCheckBoxView.h */,
+				7FB44D7B1985B2D60007D2C4 /* GTDCheckBoxView.m */,
+				7FFF1B561978248C00A9F489 /* GTDNewContextOrTagTableViewController.h */,
+				7FFF1B571978248C00A9F489 /* GTDNewContextOrTagTableViewController.m */,
+				7F3697A11971EE6D002DC118 /* GTDNewProjectTableViewController.h */,
+				7F3697A21971EE6D002DC118 /* GTDNewProjectTableViewController.m */,
+				7FE0D2B91958FA2800074259 /* GTDNewActionTableViewController.h */,
+				7FE0D2BA1958FA2800074259 /* GTDNewActionTableViewController.m */,
+				7FE0D2C5195BBA4A00074259 /* GTDOrganizationPickerTableViewController.h */,
+				7FE0D2C6195BBA4A00074259 /* GTDOrganizationPickerTableViewController.m */,
+				7FE0D2BC1959207400074259 /* GTDStartTimeTableViewController.h */,
+				7FE0D2BD1959207400074259 /* GTDStartTimeTableViewController.m */,
+				7FE0D2BF195A4D7B00074259 /* GTDCalendarPickerViewController.h */,
+				7FE0D2C0195A4D7B00074259 /* GTDCalendarPickerViewController.m */,
+				7FE0D2C2195B5D7600074259 /* GTDkeyboardAccessoryView.h */,
+				7FE0D2C3195B5D7600074259 /* GTDkeyboardAccessoryView.m */,
 				7F2BE8CC194519C100D51335 /* Images.xcassets */,
 				7F2BE8C3194519C100D51335 /* iGTD.xcdatamodeld */,
 				7F2BE8B5194519C100D51335 /* Supporting Files */,
@@ -492,6 +502,7 @@
 			files = (
 				7F2BE9081945242600D51335 /* _Tag.m in Sources */,
 				7F74FCFD1950C14300A0852F /* GTDRootTableViewController.m in Sources */,
+				7FB44D791985B1980007D2C4 /* GTDTableViewCell.m in Sources */,
 				7F2BE8BF194519C100D51335 /* GTDAppDelegate.m in Sources */,
 				7F2BE9061945242600D51335 /* _Context.m in Sources */,
 				7F2BE90B1945242600D51335 /* Context.m in Sources */,
@@ -502,6 +513,7 @@
 				7FE0D2C1195A4D7B00074259 /* GTDCalendarPickerViewController.m in Sources */,
 				7F2BE8BB194519C100D51335 /* main.m in Sources */,
 				7F2BE90D1945242600D51335 /* Tag.m in Sources */,
+				7FB44D7C1985B2D60007D2C4 /* GTDCheckBoxView.m in Sources */,
 				7FFF1B581978248C00A9F489 /* GTDNewContextOrTagTableViewController.m in Sources */,
 				7F2BE9071945242600D51335 /* _Project.m in Sources */,
 				7FE0D2C4195B5D7600074259 /* GTDkeyboardAccessoryView.m in Sources */,

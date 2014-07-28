@@ -58,6 +58,8 @@
         // Custom initialization
         _priorityStrings = @[@"None", @"Low", @"Medium", @"High"];
         self.organizationStrings = @[@"Context", @"Project", @"Contacts", @"Tags", @"Color"];
+        self.startTime = @0;
+        self.startTimeLabel.text = @"Inbox";
     }
     return self;
 }

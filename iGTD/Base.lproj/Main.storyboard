@@ -856,7 +856,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbD-L5-Bs7" userLabel="Button - Dismiss Keyboard">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EbD-L5-Bs7" userLabel="Button - Dismiss Keyboard">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                             <fontDescription key="fontDescription" name="ArialUnicodeMS" family="Arial Unicode MS" pointSize="24"/>
                             <state key="normal" title="⌄"/>
@@ -1113,12 +1113,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="pWJ-EO-gbP"/>
-        <segue reference="etc-Bn-w1Q"/>
-        <segue reference="xDI-H3-qre"/>
-        <segue reference="8Y6-Kd-3Ag"/>
         <segue reference="zvR-Sd-keq"/>
+        <segue reference="etc-Bn-w1Q"/>
+        <segue reference="SHr-M3-XTK"/>
+        <segue reference="r94-SU-cxp"/>
+        <segue reference="REt-uH-CZ4"/>
         <segue reference="0Ry-dq-sWs"/>
-        <segue reference="8Rz-Br-HUi"/>
+        <segue reference="pWJ-EO-gbP"/>
     </inferredMetricsTieBreakers>
 </document>

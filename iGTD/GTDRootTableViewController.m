@@ -28,27 +28,6 @@
     return _menuOptions;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -62,7 +41,7 @@
 {
 
     // Return the number of rows in the section.
-    return 7;
+    return [self.menuOptions count];
 }
 
 
@@ -111,9 +90,6 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    
     
     if ([segue.identifier isEqualToString:@"Entity Segue"])
     {
@@ -122,44 +98,30 @@
         masterVC.managedObjectContext = moc;
         NSFetchRequest *fetchRequest;
         
+        // Get entity name from sender cell (trimming 's' from the end)
         UITableViewCell *cell = (UITableViewCell *)sender;
         NSString *cellText = cell.textLabel.text;
         NSString *entityName = [cellText substringToIndex:cellText.length-1];
         NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:moc];
+        
+        // Create fetch request using entity name
         fetchRequest = [[NSFetchRequest alloc] init];
         [fetchRequest setEntity:entity];
         
-        // Edit the sort key as appropriate.
+        // Sort contacts by lastName all other entities by title
         NSString *sortKey;
-        if ([cellText isEqualToString:@"Contacts"])
-        {
-            sortKey = @"lastName";
-        } else
-        {
-            sortKey = @"title";
-        }
+        if ([cellText isEqualToString:@"Contacts"]) sortKey = @"lastName";
+        else sortKey = @"title";
         
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
         NSArray *sortDescriptors = @[sortDescriptor];
         
         [fetchRequest setSortDescriptors:sortDescriptors];
         
-        NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:cellText];
+        NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:nil];
         projectsController.delegate = masterVC;
         masterVC.fetchedResultsController = projectsController;
         masterVC.navigationItem.title = cellText;
-        
-        if ([cellText isEqualToString:@"Contexts"] || [cellText isEqualToString:@"Projects"])
-        {
-            NSString *predicateString = [[entityName lowercaseString] stringByAppendingString:@" == %@"];
-            masterVC.predicateFormatString = predicateString;
-            NSLog(@"%@", predicateString);
-        } else if ([cellText isEqualToString:@"Contacts"] || [cellText isEqualToString:@"Tags"])
-        {
-            NSString *predicateString = @"%@ IN ";
-            masterVC.predicateFormatString = [predicateString stringByAppendingString:[cellText lowercaseString]];
-            NSLog(@"%@", predicateString);
-        }
         
         
         NSError *error = nil;
@@ -169,6 +131,7 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
     } else if ([segue.identifier isEqualToString:@"All Actions"])
     {
         NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
@@ -182,7 +145,7 @@
             NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                        managedObjectContext:moc
                                                                                                          sectionNameKeyPath:@"startTime"
-                                                                                                                  cacheName:@"All Actions"];
+                                                                                                                  cacheName:nil];
             fetchedResultsController.delegate = actionsVC;
             actionsVC.fetchedResultsController = fetchedResultsController;
             actionsVC.navigationItem.title = @"All Actions";
@@ -210,7 +173,7 @@
         NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                    managedObjectContext:moc
                                                                                                      sectionNameKeyPath:nil
-                                                                                                              cacheName:@"Inbox"];
+                                                                                                              cacheName:nil];
         
         fetchedResultsController.delegate = inboxVC;
         inboxVC.fetchedResultsController = fetchedResultsController;

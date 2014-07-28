@@ -11,6 +11,7 @@
 #import "GTDActionsTableViewController.h"
 #import "GTDNewActionTableViewController.h"
 #import "GTDNewContextOrTagTableViewController.h"
+#import "GTDTableViewCell.h"
 #import "GTDAppDelegate.h"
 #import "Action.h"
 #import "Project.h"
@@ -98,15 +99,32 @@
             return NSStringFromClass([self.parentEntity class]);
         } else
         {
-            Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section - 1]];
-            NSString *title = self.startTimes[[action.startTime integerValue]];
-            return title;
+            id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section - 1];
+            
+            if ([sectionInfo numberOfObjects])
+            {
+                Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section - 1]];
+                NSString *title = self.startTimes[[action.startTime integerValue]];
+                return title;
+            } else
+            {
+                return @"Empty";
+            }
         }
     } else
     {
-        Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
-        NSString *title = self.startTimes[[action.startTime integerValue]];
-        return title;
+        id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+        
+        if ([sectionInfo numberOfObjects])
+        {
+            Action *action = (Action *)[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+            NSString *title = self.startTimes[[action.startTime integerValue]];
+            return title;
+        } else
+        {
+            return @"Empty";
+        }
+        
     }
     
 }
@@ -194,6 +212,31 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        if (self.parentEntity) [moc deleteObject:[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section - 1]]];
+        else [moc deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+            if (!success)
+            {
+                NSLog(@"Error Deleting Action: %@", [error localizedDescription]);
+            } else
+            {
+                NSLog(@"Action Deleted!");
+            }
+        }];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // The table view should not be re-orderable.
+    return NO;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.parentEntity)
@@ -235,14 +278,18 @@
         {
             NSString *parentType = NSStringFromClass([self.parentEntity class]);
             parentType = [parentType lowercaseString];
+            GTDNewActionTableViewController *newActionVC = (GTDNewActionTableViewController *)segue.destinationViewController;
+            
             if ([parentType isEqualToString:@"contact"] || [parentType isEqualToString:@"tag"])
             {
                 parentType = [parentType stringByAppendingString:@"s"];
-                self.parentEntity = [NSSet setWithObject:self.parentEntity];
+                NSSet *entitySet = [NSSet setWithObject:self.parentEntity];
+                [newActionVC setValue:entitySet forKey:parentType];
+            } else
+            {
+                [newActionVC setValue:self.parentEntity forKey:parentType];
             }
-
-            GTDNewActionTableViewController *newActionVC = (GTDNewActionTableViewController *)segue.destinationViewController;
-            [newActionVC setValue:self.parentEntity forKey:parentType];
+            
         }
     } else if ([segue.identifier isEqualToString:@"Action"])
     {
@@ -260,6 +307,7 @@
         editActionVC.scheduledDate = action.scheduledDate;
         editActionVC.deadline = action.deadline;
         editActionVC.isAllDay = [action.isAllDay boolValue];
+        editActionVC.navigationItem.title = @"Edit Action";
     } else if ([segue.identifier isEqualToString:@"Project"])
     {
         Project *project = (Project *)sender;
@@ -273,6 +321,7 @@
         editProjectVC.context = project.context;
         editProjectVC.contacts = project.contacts;
         editProjectVC.tags = project.tags;
+        editProjectVC.navigationItem.title = @"Edit Project";
     } else if ([segue.identifier isEqualToString:@"Context"])
     {
         Context *context = (Context *)sender;

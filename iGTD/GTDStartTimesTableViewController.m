@@ -119,7 +119,7 @@
         NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                    managedObjectContext:moc
                                                                                                      sectionNameKeyPath:@"startTime"
-                                                                                                              cacheName:cell.textLabel.text];
+                                                                                                              cacheName:nil];
         
         if ([segue.destinationViewController isKindOfClass:[GTDActionsTableViewController class]])
         {

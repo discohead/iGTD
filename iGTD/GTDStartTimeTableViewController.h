@@ -19,6 +19,7 @@
 @interface GTDStartTimeTableViewController : UITableViewController
 
 @property (nonatomic) BOOL isAllDay;
+@property (nonatomic) BOOL isProject;
 @property (weak, nonatomic) id <GTDStartTimeTableViewControllerDelegate> delegate;
 
 @end

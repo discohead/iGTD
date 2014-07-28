@@ -39,13 +39,7 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+}	
 
 - (void)insertNewObject:(id)sender
 {
@@ -89,16 +83,18 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        NSManagedObjectContext *moc = [NSManagedObjectContext defaultContext];
+        [moc deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
-        NSError *error = nil;
-        if (![context save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
+        [moc saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+            if (!success)
+            {
+                NSLog(@"Error Deleting Entity: %@", [error localizedDescription]);
+            } else
+            {
+                NSLog(@"Entity Deleted!");
+            }
+        }];
     }   
 }
 
@@ -112,6 +108,8 @@
 {
     [self performSegueWithIdentifier:@"Actions List" sender:[tableView cellForRowAtIndexPath:indexPath]];
 }
+
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -134,11 +132,24 @@
         
         [fetchRequest setSortDescriptors:sortDescriptors];
         
-        NSPredicate *fetchPredicate = [NSPredicate predicateWithFormat:self.predicateFormatString, object];
+        NSString *entityName = [[[[self.fetchedResultsController fetchRequest] entity] name] lowercaseString];
+        NSPredicate *predicate;
         
-        [fetchRequest setPredicate:fetchPredicate];
+        if ([entityName isEqualToString:@"context"] || [entityName isEqualToString:@"project"])
+        {
+            NSString *format = [entityName stringByAppendingString:@" == %@"];
+            predicate = [NSPredicate predicateWithFormat:format, object];
+            NSLog(@"%@", predicate);
+        } else if ([entityName isEqualToString:@"contact"] || [entityName isEqualToString:@"tag"])
+        {
+            NSString *format = [NSString stringWithFormat:@"%%@ IN %@s", entityName];
+            predicate = [NSPredicate predicateWithFormat:format, object];
+            NSLog(@"%@", predicate);
+        }
         
-        NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:@"startTime" cacheName:[object description]];
+        [fetchRequest setPredicate:predicate];
+        
+        NSFetchedResultsController *projectsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:@"startTime" cacheName:nil];
         projectsController.delegate = actionsVC;
         actionsVC.fetchedResultsController = projectsController;
         actionsVC.parentEntity = object;

@@ -23,8 +23,8 @@
         _startTimeStrings = @[@"Inbox", @"Today", @"Next", @"Tomorrow", @"Scheduled", @"Someday", @"Waiting"];
         _organizationStrings = @[@"Context", @"Contacts", @"Tags", @"Color"];
         _isAllDay = YES;
-        _startTime = @0;
-        _startTimeLabel.text = @"Inbox";
+        _startTime = @2;
+        _startTimeLabel.text = @"Next";
     }
     return self;
 }
@@ -83,6 +83,14 @@
             NSArray *vcs = [nav viewControllers];
             GTDStartTimeTableViewController *startTimeVC = [vcs firstObject];
             startTimeVC.isAllDay = self.isAllDay;
+            if ([self respondsToSelector:@selector(action)])
+            {
+                startTimeVC.isProject = NO;
+            } else
+            {
+                startTimeVC.isProject = YES;
+            }
+            
             startTimeVC.delegate = self;
         }
     } else if ([segue.identifier isEqualToString:@"deadline"])
@@ -146,7 +154,7 @@
             NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
             NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:sortKey ascending:YES];
             [fetchRequest setSortDescriptors:@[sortDescriptor]];
-            NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:entityName];
+            NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:moc sectionNameKeyPath:nil cacheName:nil];
             orgVC.fetchedResultsController = fetchedResultsController;
             fetchedResultsController.delegate = orgVC;
             orgVC.entityName = entityName;
@@ -346,7 +354,10 @@
     
     self.project.title = self.titleTextField.text;
     self.project.textDescription = self.descriptionTextField.text;
-    self.project.startTime = self.startTime;
+    if ([self.startTime integerValue] > 0 && [self.startTime integerValue] < 6)
+    {
+        self.project.startTime = self.startTime;
+    }
     self.project.scheduledDate = self.scheduledDate;
     self.project.deadline = self.deadline;
     self.project.context = self.context;
